@@ -1,6 +1,6 @@
 # Zangetsu Data Structures
 
-Zangetsu Data Structures is a subsection of the Zangetsu Framework that is now an independent repository of its own.
+Zangetsu Data Structures is a subsection of the [Zangetsu Framework](https://github.com/Machx/Zangetsu) that is now an independent repository of its own.
 
 ## Unit Tests
 
