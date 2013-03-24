@@ -27,6 +27,13 @@
  THE SOFTWARE.
  */
 
+  /*
+ This class should not make any use of the Zangetsu Framework API's so it can
+ retain its independence and be used in other projects not making use of the
+ Zangetsu Framework.
+  */
+
+
 #import <Foundation/Foundation.h>
 
 @interface CWTreeNode : NSObject
