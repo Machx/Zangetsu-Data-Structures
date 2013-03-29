@@ -186,7 +186,7 @@
 							error:(NSError **)error {
 	NSUInteger maxCount = (self.count - 1);
 	if (index > maxCount) {
-		if (*error) {
+		if (error) {
 			*error = [NSError errorWithDomain:kCWDoublyLinkedListErrorDomain
 										 code:kLLIndexBeyondListBoundsErrorCode
 									 userInfo:@{NSLocalizedFailureReasonErrorKey:
@@ -196,7 +196,7 @@
 		}
 	}
 	if (self.head == nil) {
-		if (*error) {
+		if (error) {
 			*error = [NSError errorWithDomain:kCWDoublyLinkedListErrorDomain
 										 code:kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode
 									 userInfo:@{ NSLocalizedFailureReasonErrorKey :
