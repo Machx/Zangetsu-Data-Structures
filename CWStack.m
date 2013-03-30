@@ -69,17 +69,19 @@ static int64_t queueCounter = 0;
 }
 
 -(void)push:(id)object {
+	__weak CWStack *bself = self;
 	dispatch_async(self.queue, ^{
-		if (object) [self.dataStore addObject:object];
+		if (object) [bself.dataStore addObject:object];
 	});
 }
 
 -(id)pop {
 	__block id object = nil;
+	__weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		if (self.dataStore.count > 0) {
-			object = [self.dataStore lastObject];
-			[self.dataStore removeLastObject];
+		if (bself.dataStore.count > 0) {
+			object = [bself.dataStore lastObject];
+			[bself.dataStore removeLastObject];
 		}
 	});
 	return object;
@@ -113,48 +115,54 @@ static int64_t queueCounter = 0;
 
 -(id)topOfStackObject {
 	__block id object = nil;
+	__weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		if(self.dataStore.count == 0) return;
-		object = [self.dataStore lastObject];
+		if(bself.dataStore.count == 0) return;
+		object = [bself.dataStore lastObject];
 	});
 	return object;
 }
 
 -(id)bottomOfStackObject {
 	__block id object = nil;
+	__weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		if (self.dataStore.count == 0) return;
+		if (bself.dataStore.count == 0) return;
 		object = bself.dataStore[0];
 	});
 	return object;
 }
 
 -(void)clearStack {
+	__weak CWStack *bself = self;
 	dispatch_async(self.queue, ^{
-		[self.dataStore removeAllObjects];
+		[bself.dataStore removeAllObjects];
 	});
 }
 
 -(BOOL)isEqualToStack:(CWStack *)aStack {
 	__block BOOL isEqual = NO;
+	__weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		isEqual = [aStack.dataStore isEqual:self.dataStore];
+		isEqual = [aStack.dataStore isEqual:bself.dataStore];
 	});
 	return isEqual;
 }
 
 -(BOOL)containsObject:(id)object {
 	__block BOOL contains = NO;
+	__weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		contains = [self.dataStore containsObject:object];
+		contains = [bself.dataStore containsObject:object];
 	});
 	return contains;
 }
 
 -(BOOL)containsObjectWithBlock:(BOOL (^)(id object))block {
 	__block BOOL contains = NO;
+	__weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		NSUInteger index = [self.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+		NSUInteger index = [bself.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
 			return block(obj);
 		}];
 		if (index != NSNotFound) contains = YES;
@@ -169,24 +177,27 @@ static int64_t queueCounter = 0;
  */
 -(NSString *)description {
 	__block NSString *stackDescription = nil;
+	__weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		stackDescription = [self.dataStore description];
+		stackDescription = [bself.dataStore description];
 	});
 	return stackDescription;
 }
 
 -(BOOL)isEmpty {
     __block BOOL empty;
+    __weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		empty = (self.dataStore.count <= 0);
+		empty = (bself.dataStore.count <= 0);
 	});
 	return empty;
 }
 
 -(NSInteger)count {
     __block NSInteger theCount = 0;
+    __weak CWStack *bself = self;
 	dispatch_sync(self.queue, ^{
-		theCount = self.dataStore.count;
+		theCount = bself.dataStore.count;
 	});
 	return theCount;
 }
