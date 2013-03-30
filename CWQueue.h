@@ -46,7 +46,7 @@
  Initializes a CWQueue object with the contents of array
  
  When a CWQueue dequeues all the objects initialized from a NSArray it will
- enumerate object them in the same order in which they were added in the array 
+ enumerate over them in the same order in which they were added in the array 
  going over object at index 0,1,2...etc.
  
  @param array a NSArray to initialize the contents of the Queue with
