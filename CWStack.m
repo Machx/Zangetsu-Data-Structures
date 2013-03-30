@@ -124,7 +124,7 @@ static int64_t queueCounter = 0;
 	__block id object = nil;
 	dispatch_sync(self.queue, ^{
 		if (self.dataStore.count == 0) return;
-		object = [self.dataStore cw_firstObject];
+		object = bself.dataStore[0];
 	});
 	return object;
 }
