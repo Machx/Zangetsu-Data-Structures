@@ -29,14 +29,6 @@
 
 #import "CWTrie.h"
 
-#define TRIE_LOG_ERROR( domain , errorCode , msg ) \
-do { \
-	NSError *error = [NSError errorWithDomain:domain \
-										 code:errorCode \
-									 userInfo:@{ NSLocalizedDescriptionKey : msg }]; \
-	NSLog(@"Error: %@",error); \
-}while(0);
-
 @interface CWTrieNode : NSObject
 @property(retain) NSString *key;
 @property(retain) id value;
