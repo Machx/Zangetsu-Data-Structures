@@ -102,11 +102,11 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 
 BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 	if (character == nil) {
-		TRIE_LOG_ERROR(kZangetsuTrieErrorDomain, kNilLookupCharacterErrorCode, @"Character to be looked up is nil");
+		NSLog(@"%s: Character to be looked up is nil",__PRETTY_FUNCTION__);
 		return YES;
 	}
-	if (![character cw_isNotEmptyString]) {
-		TRIE_LOG_ERROR(kZangetsuTrieErrorDomain, kEmptyLookupStringErrorCode, @"Character to be looked up is an empty string");
+	if (![character cw_isNotEmptyString]) { //TODO: remove usage of isNotEmptyString
+		NSLog(@"%s: Character to be looked up is an empty string",__PRETTY_FUNCTION__);
 		return YES;
 	}
 	return NO;
@@ -129,7 +129,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 
 -(id)objectValueForKey:(NSString *)aKey {
 	if ((!aKey) || (aKey.length == 0)) {
-		TRIE_LOG_ERROR(kZangetsuTrieErrorDomain, 405, @"Nil or 0 length key. Returning nil");
+		NSLog(@"%s: Nil or 0 length key. Returning nil",__PRETTY_FUNCTION__);
 		return nil;
 	}
 	
@@ -154,7 +154,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 -(void)setObjectValue:(id)aObject 
 			   forKey:(NSString *)aKey {
 	if((!aKey) || (aKey.length == 0)) {
-		TRIE_LOG_ERROR(kZangetsuTrieErrorDomain, 404, @"Key is nil, cannot set value");
+		NSLog(@"%s: Key is nil, cannot set value",__PRETTY_FUNCTION__);
 		return;
 	}
 	
