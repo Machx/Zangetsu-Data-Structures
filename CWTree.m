@@ -142,9 +142,10 @@
 
 -(id)initWithRootNodeValue:(id)value {
     self = [super init];
-    if (self) {
-        _rootNode = [[CWTreeNode alloc] initWithValue:value];
-    }
+    if (!self) return nil;
+    
+    _rootNode = [[CWTreeNode alloc] initWithValue:value];
+    
     return self;
 }
 
