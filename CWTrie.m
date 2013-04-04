@@ -97,7 +97,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 		NSLog(@"%s: Character to be looked up is nil",__PRETTY_FUNCTION__);
 		return YES;
 	}
-	if (![character cw_isNotEmptyString]) { //TODO: remove usage of isNotEmptyString
+	if (character.length == 0) {
 		NSLog(@"%s: Character to be looked up is an empty string",__PRETTY_FUNCTION__);
 		return YES;
 	}
