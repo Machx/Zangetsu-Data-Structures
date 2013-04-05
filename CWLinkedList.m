@@ -29,6 +29,14 @@
 
 #import "CWLinkedList.h"
 
+static NSString *const kCWDoublyLinkedListErrorDomain = @"com.Zangetsu.CWDoublyLinkedList";
+
+static NSUInteger const kLLInsertNilErrorCode = 442;
+static NSUInteger const kLLInsertWithNilListAndIndexGreateZeroErrorCode = 443;
+static NSUInteger const kLLDeleteObjectOnNilListWithIndexErrorCode = 450;
+static NSUInteger const kLLIndexBeyondListBoundsErrorCode = 460;
+static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
+
 #define CWLL_LOG_ERROR( domain , errorCode , msg ) \
 	do { \
 		NSError *error = [NSError errorWithDomain:domain \
