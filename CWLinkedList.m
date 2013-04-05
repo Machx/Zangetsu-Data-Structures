@@ -191,23 +191,15 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 -(CWLinkedListNode *)_nodeAtIndex:(NSUInteger)index
 							error:(NSError **)error {
 	NSUInteger maxCount = (self.count - 1);
-	if (index > maxCount) {
-		if (error) {
-			*error = [NSError errorWithDomain:kCWDoublyLinkedListErrorDomain
-										 code:kLLIndexBeyondListBoundsErrorCode
-									 userInfo:@{NSLocalizedFailureReasonErrorKey:
-					  [NSString stringWithFormat:@"Index %lu is beyond List Bounds %lu",
-					   index,maxCount]}];
-			return nil;
-		}
-	}
 	if (self.head == nil) {
-		if (error) {
-			*error = [NSError errorWithDomain:kCWDoublyLinkedListErrorDomain
-										 code:kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode
-									 userInfo:@{ NSLocalizedFailureReasonErrorKey :
-					  @"Attempting to get Node at index in a list with no elements"}];
-		}
+		NSLog(@"%s: Attempting to get Node at index in a list with no elements",
+			__PRETTY_FUNCTION__);
+		return nil;
+	}
+	if (index > maxCount) {
+		NSLog(@"%s: Index %lu is beyond List bounds %lu",
+			__PRETTY_FUNCTION__,index,maxCount);
+		return nil;
 	}
 	
 	NSUInteger currentIndex = 0;
