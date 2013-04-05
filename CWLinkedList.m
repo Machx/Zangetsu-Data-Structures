@@ -176,7 +176,7 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 }
 
 -(void)removeObject:(id)object {
-	if (!self.head) { return; }
+	if (!self.head) return;
 	
 	CWLinkedListNode *node = self.head;
 	while (node) {
