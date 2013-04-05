@@ -132,13 +132,8 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 		return;
 	}
 	
-	NSError *error;
-	CWLinkedListNode *node = [self _nodeAtIndex:index
-										  error:&error];
-	if(node == nil) {
-		CWLogError(error);
-		return;
-	}
+	CWLinkedListNode *node = [self _nodeAtIndex:index];
+	if(node == nil) return;
 	
 	CWLinkedListNode *insertNode = [[CWLinkedListNode alloc] init];
 	insertNode.data = anObject;
@@ -163,15 +158,12 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 
 -(void)removeObjectAtIndex:(NSUInteger)index {
 	if (!self.head) {
-		CWLL_LOG_ERROR(kCWDoublyLinkedListErrorDomain,
-					   kLLDeleteObjectOnNilListWithIndexErrorCode,
-					   @"Trying to delete an object in a list with no objects and index > 0");
-
+		NSLog(@"%s: Trying to delete an object in a list with no objects and index > 0",
+			  __PRETTY_FUNCTION__);
 		return;
 	}
 	
-	CWLinkedListNode *node = [self _nodeAtIndex:index
-										  error:nil];
+	CWLinkedListNode *node = [self _nodeAtIndex:index];
 	[self _removeObjectWithNode:node];
 }
 
@@ -211,44 +203,24 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 }
 
 -(id)objectAtIndexedSubscript:(NSUInteger)index {
-	NSError *error;
-	CWLinkedListNode *node = [self _nodeAtIndex:index
-										  error:&error];
-	if (!node) {
-		CWLogError(error);
-		return nil;
-	}
+	CWLinkedListNode *node = [self _nodeAtIndex:index];
+	if (!node) return nil;
 	return node.data;
 }
 
 -(void)setObject:(id)object atIndexedSubscript:(NSUInteger)idx {
 	NSParameterAssert(object);
-	NSError *error;
-	CWLinkedListNode *node = [self _nodeAtIndex:idx
-										  error:&error];
-	if (!node) {
-		CWLogError(error);
-		return;
-	}
+	CWLinkedListNode *node = [self _nodeAtIndex:idx];
+	if (!node) return;
 	node.data = object;
 }
 
 -(void)swapObjectAtIndex:(NSUInteger)index1
 			   withIndex:(NSUInteger)index2 {
-	NSError *node1Error, *node2Error;
-	CWLinkedListNode *node1 = [self _nodeAtIndex:index1
-										   error:&node1Error];
-	CWLinkedListNode *node2 = [self _nodeAtIndex:index2
-										   error:&node2Error];
+	CWLinkedListNode *node1 = [self _nodeAtIndex:index1];
+	CWLinkedListNode *node2 = [self _nodeAtIndex:index2];
 	
-	if(!node1) {
-		NSLog(@"Error: %@",node1Error);
-		return;
-	}
-	if(!node2) {
-		NSLog(@"Error: %@",node2Error);
-		return;
-	}
+	if((!node1) || (!node2)) return;
 	
 	id temp = node1.data;
 	node1.data = node2.data;
@@ -257,9 +229,8 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 
 -(CWLinkedList *)linkedListWithRange:(NSRange)range {
 	if ((range.length + range.location) > (self.count - 1)) {
-		CWLL_LOG_ERROR(kCWDoublyLinkedListErrorDomain,
-					   kLLIndexBeyondListBoundsErrorCode,
-					   @"Error: Range beyond bounds... Exiting now...");
+		NSLog(@"%s: Range beyond bounds... Exiting now...",
+			  __PRETTY_FUNCTION__);
 		return nil;
 	}
 	
