@@ -188,17 +188,16 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 	}
 }
 
--(CWLinkedListNode *)_nodeAtIndex:(NSUInteger)index
-							error:(NSError **)error {
+-(CWLinkedListNode *)_nodeAtIndex:(NSUInteger)index {
 	NSUInteger maxCount = (self.count - 1);
 	if (self.head == nil) {
 		NSLog(@"%s: Attempting to get Node at index in a list with no elements",
-			__PRETTY_FUNCTION__);
+			  __PRETTY_FUNCTION__);
 		return nil;
 	}
 	if (index > maxCount) {
 		NSLog(@"%s: Index %lu is beyond List bounds %lu",
-			__PRETTY_FUNCTION__,index,maxCount);
+			  __PRETTY_FUNCTION__,index,maxCount);
 		return nil;
 	}
 	
