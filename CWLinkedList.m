@@ -109,13 +109,11 @@ static NSUInteger const kLLAttemptToGetNodeAtIndexWithNoElementsErrorCode = 461;
 -(BOOL)hasInsertObjectErrorsWithObject:(id)object
 							  andIndex:(NSUInteger)index {
 	if (object == nil) {
-		CWLL_LOG_ERROR(kCWDoublyLinkedListErrorDomain, kLLInsertNilErrorCode, @"Attemtping to insert a nil object");
+		NSLog(@"%s: Attemtping to insert a nil object",__PRETTY_FUNCTION__);
 		return YES;
 	}
 	if ((!self.head) && (index != 0)) {
-		CWLL_LOG_ERROR(kCWDoublyLinkedListErrorDomain,
-					   kLLInsertWithNilListAndIndexGreateZeroErrorCode,
-					   @"Trying to insert an object in a list with no objects and index > 0");
+		NSLog(@"%s: Trying to insert an object in a list with no objects and index > 0",__PRETTY_FUNCTION__);
 		return YES;
 	}
 	return NO;
