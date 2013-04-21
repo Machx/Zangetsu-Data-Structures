@@ -99,12 +99,10 @@
 }
 
 -(id)dequeue {
-	if (self.storage.count > 0) {
-		id dequeuedObject = self.storage[0];
-		[self.storage removeObjectAtIndex:0];
-		return dequeuedObject;
-	}
-	return nil;
+	if(self.storage.count == 0) return nil;
+	id dequeuedObject = self.storage[0];
+	[self.storage removeObjectAtIndex:0];
+	return dequeuedObject;
 }
 
 -(void)enumerateContents:(void (^)(id object, NSUInteger index, BOOL *stop))block {
