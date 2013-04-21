@@ -85,7 +85,7 @@
 }
 
 -(void)enqueueObjectsInArray:(NSArray *)array {
-	if (array && (array.count > 0)) {
+	if (array.count > 0) {
 		[self.storage addObjectsFromArray:array];
 		[self clearExcessObjects];
 	}
