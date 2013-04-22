@@ -72,15 +72,14 @@
 }
 
 -(void)enqueue:(id)object {
-	if (object) {
-		if (![self.storage containsObject:object]) {
-			[self.storage addObject:object];
-			[self clearExcessObjects];
-		} else {
-			NSUInteger objectIndex = [self.storage indexOfObject:object];
-			[self.storage removeObjectAtIndex:objectIndex];
-			[self.storage addObject:object];
-		}
+	if(object == nil) return;
+	if (![self.storage containsObject:object]) {
+		[self.storage addObject:object];
+		[self clearExcessObjects];
+	} else {
+		NSUInteger objectIndex = [self.storage indexOfObject:object];
+		[self.storage removeObjectAtIndex:objectIndex];
+		[self.storage addObject:object];
 	}
 }
 
