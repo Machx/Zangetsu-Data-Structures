@@ -119,7 +119,7 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 /**
  Returns the count of items in the queue
  
- @return count a NSUInteger with the number of items in the queue
+ @return count the number of items in the queue
  */
 -(NSUInteger)count;
 
