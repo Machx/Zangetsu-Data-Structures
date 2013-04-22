@@ -108,11 +108,18 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 
 /**
  Returns the object at the given index. This method matches NSArrays behavior.
+
+ This method is present to support Objective-C's Object subscripting syntax.
+
+ @param index the slot whose corresponding object is to be retrieved
  */
 -(id)objectAtIndexedSubscript:(NSUInteger)index;
 
 /**
  Sets the object at the given index. This method matches NSArrays behavior.
+
+ @param object the object to be retained by the collection and accessible at idx
+ @param idx the index that object is to be inserted at
  */
 -(void)setObject:(id)object atIndexedSubscript:(NSUInteger)idx;
 
