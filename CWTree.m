@@ -147,8 +147,7 @@
 }
 
 -(BOOL)isEqualToTree:(CWTree *)tree {
-	if (tree && [self.rootNode isEqualToNode:tree.rootNode]) return YES;
-    return NO;
+	return [self.rootNode isEqualToNode:tree.rootNode];
 }
 
 -(void)enumerateTreeWithBlock:(void (^)(id nodeValue, id node, BOOL *stop))block {
