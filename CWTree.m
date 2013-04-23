@@ -79,8 +79,7 @@
 
 
 -(void)addChild:(CWTreeNode *)node {
-	if(!node) return;
-	
+	if(node == nil) return;
 	if (self.allowsDuplicates) {
 		node.parent = self;
 		[self.children addObject:node];
@@ -104,7 +103,8 @@
 
 
 -(void)removeChild:(CWTreeNode *)node {
-	if (node && [self.children containsObject:node]) {
+	if(node == nil) return;
+	if ([self.children containsObject:node]) {
 		node.parent = nil;
 		[self.children removeObject:node];
 	}
