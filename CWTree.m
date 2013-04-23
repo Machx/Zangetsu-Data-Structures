@@ -120,10 +120,7 @@
 }
 
 -(BOOL)isNodeValueEqualTo:(CWTreeNode *)node {
-    if ([node.value isEqual:self.value]) {
-        return YES;
-    }
-    return NO;
+    return [node.value isEqual:self.value];
 }
 
 -(NSUInteger)nodeLevel {
