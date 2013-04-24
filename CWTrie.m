@@ -127,7 +127,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 }
 
 -(id)objectValueForKey:(NSString *)aKey {
-	if ((!aKey) || (aKey.length == 0)) {
+	if (aKey.length == 0) {
 		NSLog(@"%s: Nil or 0 length key. Returning nil",__PRETTY_FUNCTION__);
 		return nil;
 	}
@@ -152,8 +152,8 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 
 -(void)setObjectValue:(id)aObject 
 			   forKey:(NSString *)aKey {
-	if((!aKey) || (aKey.length == 0)) {
-		NSLog(@"%s: Key is nil, cannot set value",__PRETTY_FUNCTION__);
+	if(aKey.length == 0) {
+		NSLog(@"%s: Key is 0 length or nil, cannot set value",__PRETTY_FUNCTION__);
 		return;
 	}
 	
