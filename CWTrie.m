@@ -69,8 +69,6 @@
 
 @end
 
-BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
-
 @interface CWTrie()
 @property(retain) CWTrieNode *rootNode;
 @end
