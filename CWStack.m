@@ -88,9 +88,9 @@ static int64_t queueCounter = 0;
 }
 
 -(NSArray *)popToObject:(id)object {
-	__block NSMutableArray *poppedObjects = nil;
 	if (![self.dataStore containsObject:object]) return nil;
 	
+	NSMutableArray *poppedObjects = nil;
 	id currentObject = nil;
 	while (![self.topOfStackObject isEqual:object]) {
 		currentObject = [self pop];
