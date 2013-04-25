@@ -45,7 +45,7 @@ static int64_t queueCounter = 0;
  */
 - (id)init {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_dataStore = [[NSMutableArray alloc] init];
 	const char *label = [[NSString stringWithFormat:@"com.Zangetsu.CWStack_%lli",
