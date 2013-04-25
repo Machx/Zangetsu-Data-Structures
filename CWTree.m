@@ -104,11 +104,9 @@
 
 
 -(void)removeChild:(CWTreeNode *)node {
-	if(node == nil) return;
-	if ([self.children containsObject:node]) {
-		node.parent = nil;
-		[self.children removeObject:node];
-	}
+	if(![self.children containsObject:node]) return;
+	node.parent = nil;
+	[self.children removeObject:node];
 }
 
 -(BOOL)isEqualToNode:(CWTreeNode *)node {
