@@ -28,6 +28,7 @@
  */
 
 #import "CWTree.h"
+#import "CWQueue.h" // enumeration support
 
 @interface CWTreeNode()
 @property(readwrite, retain) NSMutableArray *children;
