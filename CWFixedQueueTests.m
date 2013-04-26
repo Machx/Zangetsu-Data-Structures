@@ -38,6 +38,8 @@ it(@"should enqueue & dequeue objects as expected", ^{
 	
 	expect([queue dequeue]).to.equal(@"News");
 	expect([queue dequeue]).to.equal(@"Everybody!");
+	//Test that queue.count == 0 on dequeue returns nil
+	expect([queue dequeue]).to.beNil();
 });
 
 describe(@"-enqueueObjectsFromArray", ^{
