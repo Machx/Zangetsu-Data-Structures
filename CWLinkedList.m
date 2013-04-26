@@ -75,7 +75,7 @@
 }
 
 -(void)addObject:(id)anObject {
-	if(!anObject) return;
+	if(anObject == nil) return;
 	
 	CWLinkedListNode *node = [[CWLinkedListNode alloc] init];
 	node.data = anObject;
