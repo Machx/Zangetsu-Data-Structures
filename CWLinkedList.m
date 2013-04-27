@@ -39,7 +39,7 @@
 
 - (id)init {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_data = nil;
 	_next = nil;
@@ -65,7 +65,7 @@
 
 - (id)init {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_count = 0;
 	_head = nil;
@@ -141,7 +141,7 @@
 }
 
 -(void)removeObjectAtIndex:(NSUInteger)index {
-	if (!self.head) {
+	if (self.head == nil) {
 		NSLog(@"%s: Trying to delete an object in a list with no objects and index > 0",
 			  __PRETTY_FUNCTION__);
 		return;
@@ -188,14 +188,14 @@
 
 -(id)objectAtIndexedSubscript:(NSUInteger)index {
 	CWLinkedListNode *node = [self _nodeAtIndex:index];
-	if (!node) return nil;
+	if (node == nil) return nil;
 	return node.data;
 }
 
 -(void)setObject:(id)object atIndexedSubscript:(NSUInteger)idx {
 	NSParameterAssert(object);
 	CWLinkedListNode *node = [self _nodeAtIndex:idx];
-	if (!node) return;
+	if (node == nil) return;
 	node.data = object;
 }
 
@@ -204,7 +204,7 @@
 	CWLinkedListNode *node1 = [self _nodeAtIndex:index1];
 	CWLinkedListNode *node2 = [self _nodeAtIndex:index2];
 	
-	if((!node1) || (!node2)) return;
+	if((node1 == nil) || (node2 == nil)) return;
 	
 	id temp = node1.data;
 	node1.data = node2.data;
@@ -239,7 +239,7 @@
 }
 
 -(void)enumerateObjectsWithBlock:(void(^)(id object,NSUInteger index, BOOL *stop))block {
-	if (!self.head) return;
+	if (self.head == nil) return;
 	
 	CWLinkedListNode *node = self.head;
 	BOOL shouldStop = NO;
@@ -253,7 +253,7 @@
 }
 
 -(void)enumerateObjectsInReverseWithBlock:(void(^)(id object, NSUInteger index, BOOL *stop))block {
-	if (!self.head) return;
+	if (self.head == nil) return;
 	
 	CWLinkedListNode *tail = self.tail;
 	BOOL shouldStop = NO;
