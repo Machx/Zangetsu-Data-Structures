@@ -27,6 +27,19 @@ it(@"should add objects to the linked list", ^{
 	expect(list[1]).to.equal(@"World");
 });
 
+it(@"should return nil for empty lists or invalid indexes",^{
+	CWLinkedList *list = [[CWLinkedList alloc] init];
+
+	//test empty list
+	expect(list[0]).to.beNil();
+
+	[list addObject:@1];
+	[list addObject:@2];
+
+	//test bad index beyond bounds...
+	expect(list[10]).to.beNil();
+});
+
 it(@"should be able to insert objects at indexes", ^{
 	CWLinkedList *list = [[CWLinkedList alloc] init];
 	
