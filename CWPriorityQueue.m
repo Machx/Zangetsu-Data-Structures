@@ -17,7 +17,7 @@
 
 - (id)init {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_item = nil;
 	_priority = NSUIntegerMax; //lowest priority
