@@ -105,11 +105,11 @@
  */
 BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 	if (character == nil) {
-		NSLog(@"%s: Character to be looked up is nil",__PRETTY_FUNCTION__);
+		CWLog(@"Character to be looked up is nil");
 		return YES;
 	}
 	if (character.length == 0) {
-		NSLog(@"%s: Character to be looked up is an empty string",__PRETTY_FUNCTION__);
+		CWLog(@"Character to be looked up is an empty string");
 		return YES;
 	}
 	return NO;
@@ -132,7 +132,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 
 -(id)objectValueForKey:(NSString *)aKey {
 	if (aKey.length == 0) {
-		NSLog(@"%s: Nil or 0 length key. Returning nil",__PRETTY_FUNCTION__);
+		CWLog(@"Nil or 0 length key. Returning nil");
 		return nil;
 	}
 	
@@ -157,7 +157,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 -(void)setObjectValue:(id)aObject 
 			   forKey:(NSString *)aKey {
 	if(aKey.length == 0) {
-		NSLog(@"%s: Key is 0 length or nil, cannot set value",__PRETTY_FUNCTION__);
+		CWLog(@"Key is 0 length or nil, cannot set value");
 		return;
 	}
 	
