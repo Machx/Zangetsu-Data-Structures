@@ -29,6 +29,10 @@
 
 #import "CWTrie.h"
 
+#ifndef CWLog(args...)
+#define CWLog(args...) NSLog(@"%s %i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]);
+#endif
+
 @interface CWTrieNode : NSObject
 @property(retain) NSString *key;
 @property(retain) id value;
