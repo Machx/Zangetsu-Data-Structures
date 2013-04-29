@@ -152,7 +152,7 @@
 }
 
 -(void)removeObject:(id)object {
-	if (!self.head) return;
+	if (self.head == nil) return;
 	
 	CWLinkedListNode *node = self.head;
 	while (node) {
@@ -173,7 +173,7 @@
 	}
 	if (index > maxCount) {
 		NSLog(@"%s: Index %lu is beyond List bounds %lu",
-			  __PRETTY_FUNCTION__,index,maxCount);
+			  __PRETTY_FUNCTION__,(unsigned long)index,(unsigned long)maxCount);
 		return nil;
 	}
 	

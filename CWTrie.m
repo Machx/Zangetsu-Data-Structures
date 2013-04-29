@@ -33,6 +33,8 @@
 #define CWLog(args...) NSLog(@"%s %i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]);
 #endif
 
+BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
+
 //Log = 1, no logging = 0
  #define CWTRIE_VERBOSE_LOGGING 1
 

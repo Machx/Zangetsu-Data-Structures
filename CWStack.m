@@ -28,6 +28,7 @@
  */
 
 #import "CWStack.h"
+#import <libkern/OSAtomic.h>
 
 @interface CWStack()
 @property(retain) NSMutableArray *dataStore;
