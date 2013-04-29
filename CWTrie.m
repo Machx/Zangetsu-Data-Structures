@@ -46,7 +46,7 @@
  */
 - (id)initWithKey:(NSString *)nodeKey {
 	self = [super init];
-	if (!self) return nil;
+	if (self == nil) return nil;
 	
 	_key = nodeKey;
 	_value = nil;
@@ -57,7 +57,7 @@
 
 - (id)init {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
     
 	_key = nil;
 	_value = nil;
@@ -81,7 +81,7 @@
 
 - (id)init {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_rootNode = [[CWTrieNode alloc] init];
 	_caseSensitive = YES;
