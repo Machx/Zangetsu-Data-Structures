@@ -33,6 +33,9 @@
 #define CWLog(args...) NSLog(@"%s %i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]);
 #endif
 
+//Log = 1, no logging = 0
+ #define CWTRIE_VERBOSE_LOGGING 1
+
 @interface CWTrieNode : NSObject
 @property(retain) NSString *key;
 @property(retain) id value;
@@ -105,11 +108,15 @@
  */
 BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 	if (character == nil) {
+		#if CWTRIE_VERBOSE_LOGGING == 1
 		CWLog(@"Character to be looked up is nil");
+		#endif
 		return YES;
 	}
 	if (character.length == 0) {
+		#if CWTRIE_VERBOSE_LOGGING == 1
 		CWLog(@"Character to be looked up is an empty string");
+		#endif
 		return YES;
 	}
 	return NO;
@@ -132,7 +139,9 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 
 -(id)objectValueForKey:(NSString *)aKey {
 	if (aKey.length == 0) {
+		#if CWTRIE_VERBOSE_LOGGING == 1
 		CWLog(@"Nil or 0 length key. Returning nil");
+		#endif
 		return nil;
 	}
 	
@@ -157,7 +166,9 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 -(void)setObjectValue:(id)aObject 
 			   forKey:(NSString *)aKey {
 	if(aKey.length == 0) {
+		#if CWTRIE_VERBOSE_LOGGING == 1
 		CWLog(@"Key is 0 length or nil, cannot set value");
+		#endif
 		return;
 	}
 	
