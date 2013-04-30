@@ -36,7 +36,7 @@
 
 -(NSString *)description {
 	return [NSString stringWithFormat:@"%@: Priority: %ld Item: %@",
-			NSStringFromClass([self class]), self.priority,self.item];
+			NSStringFromClass([self class]), (unsigned long)self.priority,self.item];
 }
 
 @end
