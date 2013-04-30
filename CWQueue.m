@@ -28,6 +28,7 @@
  */
  
 #import "CWQueue.h"
+#import <libkern/OSAtomic.h>
 
 @interface CWQueue()
 //private internal ivar
