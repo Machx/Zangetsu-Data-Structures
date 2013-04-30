@@ -123,7 +123,7 @@
 	return [self.storage filteredArrayUsingPredicate:predicate];
 }
 
--(NSArray *)allObjectsOfPriority:(NSUInteger)priority; {
+-(NSArray *)allObjectsOfPriority:(NSUInteger)priority {
 	NSMutableArray *results = [NSMutableArray array];
 	NSArray *filteredResults = [self _arrayOfAllObjectsOfPriority:priority];
 	[filteredResults enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
