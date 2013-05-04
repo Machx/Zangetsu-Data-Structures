@@ -71,6 +71,10 @@ static const NSUInteger kEmptyLookupStringErrorCode = 443;
  
  [Root] -> [T] -> [e] -> [n] -> [t(1)]
                            \ -> [n] -> [i] -> [s(2)]
+
+ Note that this method allows nil values to be set for keys. In fact
+ this is how -removeObjectValueForKey: works, by calling this method
+ and passing nil or aObject for a given key.
  */
 -(void)setObjectValue:(id)aObject 
 			   forKey:(NSString *)aKey;
