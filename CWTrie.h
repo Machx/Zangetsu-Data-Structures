@@ -80,7 +80,8 @@ static NSString *const kZangetsuTrieErrorDomain = @"com.Zangetsu.CWTrie";
  Removes a object value for a given key
  
  This method essentially calls [self setObjectValue:nil forKey:aKey]
- setting nil for a given key
+ setting nil for a given key. This does not remove the nodes for the
+ given key, it simply sets the endpoint node value to nil.
  */
 -(void)removeObjectValueForKey:(NSString *)aKey;
 
