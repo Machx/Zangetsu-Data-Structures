@@ -38,6 +38,10 @@
 
 /**
  CWQueue is a Thread Safe Class
+
+ Internally CWQueue uses a dispatch_queue_t queue to perform all operations
+ on and to ensure that all operations to a given queue instance are 
+ executed serially.
  */
 
 @interface CWQueue : NSObject
