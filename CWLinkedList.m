@@ -29,6 +29,10 @@
 
 #import "CWLinkedList.h"
 
+#ifndef CWLog
+#define CWLog(args...) NSLog(@"%s %i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]);
+#endif
+
 @interface CWLinkedListNode : NSObject
 @property(retain) id data;
 @property(retain) CWLinkedListNode *next;
