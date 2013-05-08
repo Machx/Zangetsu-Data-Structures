@@ -87,36 +87,41 @@ static int64_t queueCounter = 0;
 
 -(id)dequeue {
 	__block id object = nil;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		if (self.dataStore.count == 0) return;
-		object = self.dataStore[0];
-		[self.dataStore removeObjectAtIndex:0];
+		__typeof(wself) sself = wself;
+		if (sself.dataStore.count == 0) return;
+		object = sself.dataStore[0];
+		[sself.dataStore removeObjectAtIndex:0];
 	});
 	return object;
 }
 
 -(void)enqueue:(id)object {
 	if (object) {
-		__weak CWQueue *bself = self;
+		__typeof(self) __weak wself = self;
 		dispatch_sync(self.queue, ^{
-			[bself.dataStore addObject:object];
+			__typeof(wself) sself = wself;
+			[sself.dataStore addObject:object];
 		});
 	}
 }
 
 -(void)enqueueObjectsFromArray:(NSArray *)objects {
 	if (objects.count > 0) {
-		__weak CWQueue *bself = self;
+		__typeof(self) __weak wself = self;
 		dispatch_sync(self.queue, ^{
-			[bself.dataStore addObjectsFromArray:objects];
+			__typeof(wself) sself = wself;
+			[sself.dataStore addObjectsFromArray:objects];
 		});
 	}
 }
 
 -(void)removeAllObjects {
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_async(self.queue, ^{
-		[bself.dataStore removeAllObjects];
+		__typeof(wself) sself = wself;
+		[sself.dataStore removeAllObjects];
 	});
 }
 
@@ -124,18 +129,20 @@ static int64_t queueCounter = 0;
 
 -(BOOL)containsObject:(id)object {
 	__block BOOL contains = NO;
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		contains = [bself.dataStore containsObject:object];
+		__typeof(wself) sself = wself;
+		contains = [sself.dataStore containsObject:object];
 	});
 	return contains;
 }
 
 -(BOOL)containsObjectWithBlock:(BOOL (^)(id obj))block {
 	__block BOOL contains = NO;
-	__weak CWQueue *bself = self;
+	__typeof(self) wself = self;
 	dispatch_sync(self.queue, ^{
-		NSUInteger index = [bself.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+		__typeof(wself) sself = wself;
+		NSUInteger index = [sself.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
 			return block(obj);
 		}];
 		contains = (index != NSNotFound);
@@ -145,9 +152,10 @@ static int64_t queueCounter = 0;
 
 -(id)peek {
 	__block id object = nil;
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		object = bself.dataStore[0] ?: nil;
+		__typeof(wself) sself = wself;
+		object = sself.dataStore[0] ?: nil;
 	});
 	return object;
 }
@@ -155,10 +163,11 @@ static int64_t queueCounter = 0;
 #pragma mark Enumeration Methods -
 
 -(void)enumerateObjectsInQueue:(void(^)(id object, BOOL *stop))block {
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
+		__typeof(wself) sself = wself;
 		BOOL shouldStop = NO;
-		for (id object in bself.dataStore) {
+		for (id object in sself.dataStore) {
 			block(object,&shouldStop);
 			if (shouldStop) return;
 		}
@@ -196,27 +205,30 @@ static int64_t queueCounter = 0;
  */
 -(NSString *)description {
 	__block NSString *queueDescription = nil;
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		queueDescription = [bself.dataStore description];
+		__typeof(wself) sself = wself;
+		queueDescription = [sself.dataStore description];
 	});
 	return queueDescription;
 }
 
 -(NSUInteger)count {
 	__block NSUInteger queueCount = 0;
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		queueCount = bself.dataStore.count;
+		__typeof(wself) sself = wself;
+		queueCount = sself.dataStore.count;
 	});
 	return queueCount;
 }
 
 -(BOOL)isEmpty {
 	__block BOOL queueEmpty = YES;
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		queueEmpty = (bself.dataStore.count == 0);
+		__typeof(wself) sself = wself;
+		queueEmpty = (sself.dataStore.count == 0);
 	});
 	return queueEmpty;
 }
@@ -225,9 +237,10 @@ static int64_t queueCounter = 0;
 
 -(BOOL)isEqualToQueue:(CWQueue *)aQueue {
 	__block BOOL isEqual = NO;
-	__weak CWQueue *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		isEqual = [bself.dataStore isEqual:aQueue.dataStore];
+		__typeof(wself) sself = wself;
+		isEqual = [sself.dataStore isEqual:aQueue.dataStore];
 	});
 	return isEqual;
 }
