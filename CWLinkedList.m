@@ -87,8 +87,10 @@
 		self.head = node;
 		self.tail = node;
 	} else {
-		node.prev = self.tail;
-		self.tail.next = node;
+		//make sure we get a strong ref to tail
+		CWLinkedListNode *strongTail = self.tail;
+		node.prev = strongTail;
+		strongTail.next = node;
 		self.tail = node;
 	}
 	self.count++;
