@@ -89,7 +89,7 @@ static int64_t queueCounter = 0;
 	__block id object = nil;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		if (sself.dataStore.count == 0) return;
 		object = sself.dataStore[0];
 		[sself.dataStore removeObjectAtIndex:0];
@@ -101,7 +101,7 @@ static int64_t queueCounter = 0;
 	if (object) {
 		__typeof(self) __weak wself = self;
 		dispatch_sync(self.queue, ^{
-			__typeof(wself) sself = wself;
+			__typeof(wself) __strong sself = wself;
 			[sself.dataStore addObject:object];
 		});
 	}
@@ -111,7 +111,7 @@ static int64_t queueCounter = 0;
 	if (objects.count > 0) {
 		__typeof(self) __weak wself = self;
 		dispatch_sync(self.queue, ^{
-			__typeof(wself) sself = wself;
+			__typeof(wself) __strong sself = wself;
 			[sself.dataStore addObjectsFromArray:objects];
 		});
 	}
@@ -120,7 +120,7 @@ static int64_t queueCounter = 0;
 -(void)removeAllObjects {
 	__typeof(self) __weak wself = self;
 	dispatch_async(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		[sself.dataStore removeAllObjects];
 	});
 }
@@ -131,7 +131,7 @@ static int64_t queueCounter = 0;
 	__block BOOL contains = NO;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		contains = [sself.dataStore containsObject:object];
 	});
 	return contains;
@@ -141,7 +141,7 @@ static int64_t queueCounter = 0;
 	__block BOOL contains = NO;
 	__typeof(self) wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		NSUInteger index = [sself.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
 			return block(obj);
 		}];
@@ -154,7 +154,7 @@ static int64_t queueCounter = 0;
 	__block id object = nil;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		object = sself.dataStore[0] ?: nil;
 	});
 	return object;
@@ -165,7 +165,7 @@ static int64_t queueCounter = 0;
 -(void)enumerateObjectsInQueue:(void(^)(id object, BOOL *stop))block {
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		BOOL shouldStop = NO;
 		for (id object in sself.dataStore) {
 			block(object,&shouldStop);
@@ -207,7 +207,7 @@ static int64_t queueCounter = 0;
 	__block NSString *queueDescription = nil;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		queueDescription = [sself.dataStore description];
 	});
 	return queueDescription;
@@ -217,7 +217,7 @@ static int64_t queueCounter = 0;
 	__block NSUInteger queueCount = 0;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		queueCount = sself.dataStore.count;
 	});
 	return queueCount;
@@ -227,7 +227,7 @@ static int64_t queueCounter = 0;
 	__block BOOL queueEmpty = YES;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		queueEmpty = (sself.dataStore.count == 0);
 	});
 	return queueEmpty;
@@ -239,7 +239,7 @@ static int64_t queueCounter = 0;
 	__block BOOL isEqual = NO;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		__typeof(wself) sself = wself;
+		__typeof(wself) __strong sself = wself;
 		isEqual = [sself.dataStore isEqual:aQueue.dataStore];
 	});
 	return isEqual;
