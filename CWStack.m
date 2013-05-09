@@ -70,19 +70,21 @@ static int64_t queueCounter = 0;
 }
 
 -(void)push:(id)object {
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_async(self.queue, ^{
-		if (object) [bself.dataStore addObject:object];
+		__typeof(wself) __strong sself = wself;
+		if (object) [sself.dataStore addObject:object];
 	});
 }
 
 -(id)pop {
 	__block id object = nil;
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		if (bself.dataStore.count > 0) {
-			object = [bself.dataStore lastObject];
-			[bself.dataStore removeLastObject];
+		__typeof(wself) __strong sself = wself;
+		if (sself.dataStore.count > 0) {
+			object = [sself.dataStore lastObject];
+			[sself.dataStore removeLastObject];
 		}
 	});
 	return object;
@@ -116,54 +118,60 @@ static int64_t queueCounter = 0;
 
 -(id)topOfStackObject {
 	__block id object = nil;
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		if(bself.dataStore.count == 0) return;
-		object = [bself.dataStore lastObject];
+		__typeof(wself) __strong sself = wself;
+		if(sself.dataStore.count == 0) return;
+		object = [sself.dataStore lastObject];
 	});
 	return object;
 }
 
 -(id)bottomOfStackObject {
 	__block id object = nil;
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		if (bself.dataStore.count == 0) return;
-		object = bself.dataStore[0];
+		__typeof(wself) __strong sself = wself;
+		if (sself.dataStore.count == 0) return;
+		object = sself.dataStore[0];
 	});
 	return object;
 }
 
 -(void)clearStack {
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_async(self.queue, ^{
-		[bself.dataStore removeAllObjects];
+		__typeof(wself) __strong sself = wself;
+		[sself.dataStore removeAllObjects];
 	});
 }
 
 -(BOOL)isEqualToStack:(CWStack *)aStack {
 	__block BOOL isEqual = NO;
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		isEqual = [aStack.dataStore isEqual:bself.dataStore];
+		__typeof(wself) __strong sself = wself;
+		isEqual = [aStack.dataStore isEqual:sself.dataStore];
 	});
 	return isEqual;
 }
 
 -(BOOL)containsObject:(id)object {
 	__block BOOL contains = NO;
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		contains = [bself.dataStore containsObject:object];
+		__typeof(wself) __strong sself = wself;
+		contains = [sself.dataStore containsObject:object];
 	});
 	return contains;
 }
 
 -(BOOL)containsObjectWithBlock:(BOOL (^)(id object))block {
 	__block BOOL contains = NO;
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		NSUInteger index = [bself.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+		__typeof(wself) __strong sself = wself;
+		NSUInteger index = [sself.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
 			return block(obj);
 		}];
 		if (index != NSNotFound) contains = YES;
@@ -178,27 +186,30 @@ static int64_t queueCounter = 0;
  */
 -(NSString *)description {
 	__block NSString *stackDescription = nil;
-	__weak CWStack *bself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		stackDescription = [bself.dataStore description];
+		__typeof(wself) __strong sself = wself;
+		stackDescription = [sself.dataStore description];
 	});
 	return stackDescription;
 }
 
 -(BOOL)isEmpty {
     __block BOOL empty;
-    __weak CWStack *bself = self;
+    __typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		empty = (bself.dataStore.count <= 0);
+		__typeof(wself) __strong sself = wself;
+		empty = (sself.dataStore.count <= 0);
 	});
 	return empty;
 }
 
 -(NSInteger)count {
     __block NSInteger theCount = 0;
-    __weak CWStack *bself = self;
+    __typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
-		theCount = bself.dataStore.count;
+		__typeof(wself) __strong sself = wself;
+		theCount = sself.dataStore.count;
 	});
 	return theCount;
 }
