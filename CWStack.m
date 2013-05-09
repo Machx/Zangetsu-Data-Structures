@@ -111,7 +111,7 @@ static int64_t queueCounter = 0;
 
 -(NSArray *)popToBottomOfStack {
 	if(self.dataStore.count == 0) return nil;
-	return [self popToObject:[self.dataStore cw_firstObject]];
+	return [self popToObject:self.dataStore[0]];
 }
 
 -(id)topOfStackObject {
