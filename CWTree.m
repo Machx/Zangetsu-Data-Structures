@@ -70,10 +70,11 @@
  @return a NSString with debug information on the receiving CWTreeNode Object
  */
 -(NSString *)description {
+	__typeof(self.parent) __strong  strongParent = self.parent;
 	return [NSString stringWithFormat:@"%@ Node\nValue: %@\nParent: %@\nChildren: %@\nAllows Duplicates: %@",
 			NSStringFromClass([self class]),
 			[self.value description],
-			[self.parent description],
+			[strongParent description],
 			[self.children description],
 			(self.allowsDuplicates ? @"YES" : @"NO")];
 }
