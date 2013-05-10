@@ -111,8 +111,10 @@
 }
 
 -(BOOL)isEqualToNode:(CWTreeNode *)node {
+	__typeof(self.parent) __strong selfParent = self.parent;
+	__typeof(node.parent) __strong nodeParent = node.parent;
 	if ([node.value isEqual:self.value]   &&
-		(self.parent == node.parent || [node.parent isEqual:self.parent]) &&
+		(selfParent == nodeParent || [nodeParent isEqual:selfParent]) &&
 		[node.children isEqual:self.children]) {
 		return YES;
 	}
