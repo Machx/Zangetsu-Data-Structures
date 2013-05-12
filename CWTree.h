@@ -144,7 +144,7 @@
  stop pointer in the block has been set to YES.
  
  Block values passed back to you are as follows
- @param nodeValue a convenience to accessing (CWTreeNode *)[node nodeValue]
+ @param nodeValue a convenience to accessing [(CWTreeNode *) node nodeValue]
  @param node a pointer to the node being enumerated over
  @param stop a BOOL pointer which you can set to YES to stop enumeration, 
  otherwise it will continue until all nodes have been enumerated over
