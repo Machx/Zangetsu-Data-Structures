@@ -110,8 +110,11 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
  Returns the object at the given index. This method matches NSArrays behavior.
 
  This method is present to support Objective-C's Object subscripting syntax.
+ Just like NSArray, this method will throw a NSRangeException if the index
+ given is beyond the bounds of the queue.
 
  @param index the slot whose corresponding object is to be retrieved
+ @return the object at the given subscript
  */
 -(id)objectAtIndexedSubscript:(NSUInteger)index;
 
