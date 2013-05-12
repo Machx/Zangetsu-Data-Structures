@@ -135,6 +135,10 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 
 /**
  Enumerates over the queue contents using a block
+
+ @param object The object currently being enumerated over
+ @param index The objects position in the queue
+ @param stop set this to YES to stop enumeration at any time
  */
 -(void)enumerateContents:(void (^)(id object, NSUInteger index, BOOL *stop))block;
 
@@ -143,6 +147,9 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
  
  @param options NSEnumerationOptions for how to enumerate the queue, same as NSArrays options
  @param block the block to be called for enumerating the block
+ @param object The object currently being enumerated over
+ @param index The objects position in the queue
+ @param stop set this to YES to stop enumeration at any time
  */
 -(void)enumerateContentsWithOptions:(NSEnumerationOptions)options
 						 usingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block;
