@@ -108,13 +108,13 @@ static int64_t queueCounter = 0;
 }
 
 -(void)enqueueObjectsFromArray:(NSArray *)objects {
-	if (objects.count > 0) {
-		__typeof(self) __weak wself = self;
-		dispatch_sync(self.queue, ^{
-			__typeof(wself) __strong sself = wself;
-			[sself.dataStore addObjectsFromArray:objects];
-		});
-	}
+	if(objects.count == 0) return;
+
+	__typeof(self) __weak wself = self;
+	dispatch_sync(self.queue, ^{
+		__typeof(wself) __strong sself = wself;
+		[sself.dataStore addObjectsFromArray:objects];
+	});
 }
 
 -(void)removeAllObjects {
