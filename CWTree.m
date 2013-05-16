@@ -43,7 +43,7 @@
  */
 -(id)init {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_value = nil;
 	_children = [[NSMutableArray alloc] init];
@@ -55,7 +55,7 @@
 
 -(id)initWithValue:(id)aValue {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_value = aValue;
 	_children = [[NSMutableArray alloc] init];
