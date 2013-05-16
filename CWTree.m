@@ -141,7 +141,7 @@
 
 -(id)initWithRootNodeValue:(id)value {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
     
     _rootNode = [[CWTreeNode alloc] initWithValue:value];
     
@@ -153,7 +153,7 @@
 }
 
 -(void)enumerateTreeWithBlock:(void (^)(id nodeValue, id node, BOOL *stop))block {
-	if(!self.rootNode) return;
+	if(self.rootNode == nil) return;
 	
 	CWQueue *queue = [[CWQueue alloc] init];
 	BOOL shouldStop = NO;
