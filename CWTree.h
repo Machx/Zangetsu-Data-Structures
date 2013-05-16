@@ -40,21 +40,29 @@
 
 /**
  Node value
+
+ @return the id value the node is containing
  */
 @property(retain) id value;
 
 /**
  Parent Object which is also a CWTreeNode
+
+ @return a weak reference to the parent of the node
  */
 @property(weak) id parent;
 
 /**
  Children Node Objects
+
+ @return the nodes children in the tree
  */
 @property(readonly, retain) NSMutableArray *children;
 
 /**
  Key to set if a node allows duplicate children
+
+ @return YES if duplicates are allowed, NO otherwise
  */
 @property(assign) BOOL allowsDuplicates;
 
