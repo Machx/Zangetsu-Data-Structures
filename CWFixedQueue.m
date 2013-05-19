@@ -37,7 +37,7 @@
 
 -(id)initWithCapacity:(NSUInteger)capacity {
 	self = [super init];
-	if (!self) return nil;
+	if (self == nil) return nil;
 	
 	_storage = [NSMutableArray array];
 	_capacity = capacity;
@@ -49,7 +49,7 @@
 - (id)init
 {
     self = [super init];
-    if (!self) return nil;
+    if (self == nil) return nil;
 	
 	_storage = [NSMutableArray array];
 	_capacity = 50;
