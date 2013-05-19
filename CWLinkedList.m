@@ -102,7 +102,7 @@
 		CWLog(@"Attemtping to insert a nil object");
 		return YES;
 	}
-	if ((!self.head) && (index != 0)) {
+	if ((self.head == nil) && (index != 0)) {
 		CWLog(@"Trying to insert an object in a list with no objects and index > 0");
 		return YES;
 	}
