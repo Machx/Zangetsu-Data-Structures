@@ -194,4 +194,25 @@ describe(@"-containsObjectWithBlock", ^{
 	});
 });
 
+it(@"should be able to serialize work being done concurrently", ^{
+	CWStack *stack = [[CWStack alloc] init];
+
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		[stack push:@"2"];
+	});
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		[stack push:@"1"];
+	});
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+		[stack push:@"3"];
+	});
+	
+	expect(stack.count == 3).will.beTruthy();
+	expect([stack containsObject:@"1"]).to.beTruthy();
+	expect([stack containsObject:@"2"]).to.beTruthy();
+	expect([stack containsObject:@"3"]).to.beTruthy();
+});
+
 SpecEnd
