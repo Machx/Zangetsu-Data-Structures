@@ -242,4 +242,25 @@ describe(@"-isEqualToQueue", ^{
 	});
 });
 
+it(@"should serialize multithreaded access", ^{
+	CWQueue *queue = [[CWQueue alloc] init];
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+		[queue enqueue:@"Hello"];
+	});
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		[queue enqueue:@" World"];
+	});
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+		[queue enqueue:@"!"];
+	});
+	
+	expect(queue.count == 3).will.beTruthy();
+	expect([queue containsObject:@"Hello"]).to.beTruthy();
+	expect([queue containsObject:@" World"]).to.beTruthy();
+	expect([queue containsObject:@"!"]).to.beTruthy();
+});
+
 SpecEnd
