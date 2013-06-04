@@ -33,6 +33,16 @@
 #define CWLog(args...) NSLog(@"%s %i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]);
 #endif
 
+#ifndef CWAssert
+#define CWAssert(expression, ...) \
+do { \
+	if(!(expression)) { \
+		NSLog(@"Assertion Failure '%s' in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]); \
+		abort(); \
+	} \
+} while(0)
+#endif
+
 @interface CWLinkedListNode : NSObject
 @property(retain) id data;
 @property(retain) CWLinkedListNode *next;
@@ -197,7 +207,7 @@
 }
 
 -(void)setObject:(id)object atIndexedSubscript:(NSUInteger)idx {
-	NSParameterAssert(object);
+	CWAssert(object != nil);
 	CWLinkedListNode *node = [self _nodeAtIndex:idx];
 	if (node == nil) return;
 	node.data = object;

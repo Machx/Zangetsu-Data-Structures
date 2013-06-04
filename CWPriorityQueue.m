@@ -8,6 +8,16 @@
 
 #import "CWPriorityQueue.h"
 
+#ifndef CWAssert
+#define CWAssert(expression, ...) \
+do { \
+	if(!(expression)) { \
+		NSLog(@"Assertion Failure '%s' in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]); \
+		abort(); \
+	} \
+} while(0)
+#endif
+
 @interface CWPriorityQueueItem : NSObject
 @property(retain) id item;
 @property(assign) NSUInteger priority;
@@ -27,7 +37,7 @@
 
 +(CWPriorityQueueItem *)itemWithObject:(id)object
 				  andPriority:(NSUInteger)priority {
-	NSParameterAssert(object);
+	CWAssert(object != nil);
 	CWPriorityQueueItem *queueItem = [self new];
 	queueItem.item = object;
 	queueItem.priority = priority;
@@ -77,7 +87,7 @@
 
 -(void)addItem:(id)item
   withPriority:(NSUInteger)priority {
-	NSParameterAssert(item);
+	CWAssert(item != nil);
 	CWPriorityQueueItem *container = [CWPriorityQueueItem itemWithObject:item
 															 andPriority:priority];
 	[self.storage addObject:container];
