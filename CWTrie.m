@@ -33,6 +33,15 @@
 #define CWLog(args...) NSLog(@"%s %i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]);
 #endif
 
+#ifndef CWConditionalLog
+#define CWConditionalLog(cond,args...) \
+do { \
+	if((cond)){ \
+		NSLog(@"%s L#%i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]); \
+	} \
+} while(0);
+#endif
+
 BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 
 //Log = 1, no logging = 0
