@@ -48,7 +48,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 #define CWTRIE_VERBOSE_LOGGING 1
 
 @interface CWTrieNode : NSObject
-@property(retain) NSString *key;
+@property(copy) NSString *key;
 @property(retain) id value;
 @property(retain) NSMutableSet *children;
 @end
@@ -58,7 +58,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 /**
  This should be the designated initializer 99.99% of the time
  */
-- (id)initWithKey:(NSString *)nodeKey {
+- (instancetype)initWithKey:(NSString *)nodeKey {
 	self = [super init];
 	if (self == nil) return nil;
 	
@@ -69,7 +69,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 	return self;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self == nil) return nil;
     
@@ -93,7 +93,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 
 @implementation CWTrie
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self == nil) return nil;
 	
