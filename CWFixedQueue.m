@@ -46,8 +46,7 @@
 	return self;
 }
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self == nil) return nil;
 	
@@ -57,6 +56,8 @@
 	
     return self;
 }
+
+#pragma mark Debugging -
 
 -(NSString *)description {
 	return [NSString stringWithFormat:@"%@: Label: %@\nItem Count: %lu\nCapacity: %lu\nItems: %@",
@@ -71,6 +72,8 @@
 	return self.storage.count;
 }
 
+#pragma mark Objective-C Object Subscription -
+
 -(id)objectAtIndexedSubscript:(NSUInteger)index {
 	return [self.storage objectAtIndexedSubscript:index];
 }
@@ -79,6 +82,8 @@
 	[self.storage setObject:object
 		 atIndexedSubscript:idx];
 }
+
+#pragma mark Enqueue & Dequeue -
 
 -(void)enqueue:(id)object {
 	if(object == nil) return;
@@ -94,7 +99,6 @@
 
 -(void)enqueueObjectsInArray:(NSArray *)array {
 	if(array.count == 0) return;
-	
 	[self.storage addObjectsFromArray:array];
 	[self clearExcessObjects];
 }
@@ -112,6 +116,8 @@
 	[self.storage removeObjectAtIndex:0];
 	return dequeuedObject;
 }
+
+#pragma mark Enumeration -
 
 -(void)enumerateContents:(void (^)(id object, NSUInteger index, BOOL *stop))block {
 	[self.storage enumerateObjectsUsingBlock:block];
