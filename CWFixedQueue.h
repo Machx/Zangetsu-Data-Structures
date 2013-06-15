@@ -59,6 +59,8 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
  */
 -(id)initWithCapacity:(NSUInteger)capacity;
 
+@property(copy) NSString *label;
+
 /**
  The maximum # of items the queue should contain
  */
