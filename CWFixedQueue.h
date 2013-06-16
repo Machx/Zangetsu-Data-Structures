@@ -59,6 +59,11 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
  */
 -(id)initWithCapacity:(NSUInteger)capacity;
 
+/**
+ An optional label you can apply for debugging purposes
+ 
+ This label string will print off in the -descrption
+ */
 @property(copy) NSString *label;
 
 /**
