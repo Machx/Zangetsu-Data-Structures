@@ -33,6 +33,8 @@ SOFTWARE.
  Zangetsu Framework.
   */
 
+#define kCWPriorityMax 0
+#define kCWPriorityMin NSUIntegerMax
 
 #import <Foundation/Foundation.h>
 

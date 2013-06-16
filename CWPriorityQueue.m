@@ -30,7 +30,7 @@ do { \
     if (self == nil) return nil;
 	
 	_item = nil;
-	_priority = NSUIntegerMax; //lowest priority
+	_priority = kCWPriorityMin;
 	
     return self;
 }
