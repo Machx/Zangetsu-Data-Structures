@@ -28,10 +28,7 @@
  */
 
 #import "CWLinkedList.h"
-
-#ifndef CWLog
-#define CWLog(args...) NSLog(@"%s %i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]);
-#endif
+#import "CWLogging.h" //required for CWLog and CWLogInfo
 
 #ifndef CWAssert
 #define CWAssert(expression, ...) \
