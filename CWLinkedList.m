@@ -106,11 +106,11 @@ do { \
 -(BOOL)hasInsertObjectErrorsWithObject:(id)object
 							  andIndex:(NSUInteger)index {
 	if (object == nil) {
-		CWLog(@"Attemtping to insert a nil object");
+		CWLogInfo(@"Attemtping to insert a nil object");
 		return YES;
 	}
 	if ((self.head == nil) && (index != 0)) {
-		CWLog(@"Trying to insert an object in a list with no objects and index > 0");
+		CWLogInfo(@"Trying to insert an object in a list with no objects and index > 0");
 		return YES;
 	}
 	return NO;
@@ -155,7 +155,7 @@ do { \
 
 -(void)removeObjectAtIndex:(NSUInteger)index {
 	if (self.head == nil) {
-		CWLog(@"Trying to delete an object in a list with no objects and index > 0");
+		CWLogInfo(@"Trying to delete an object in a list with no objects and index > 0");
 		return;
 	}
 	
@@ -179,12 +179,12 @@ do { \
 -(CWLinkedListNode *)_nodeAtIndex:(NSUInteger)index {
 	NSUInteger maxCount = (self.count - 1);
 	if (self.head == nil) {
-		CWLog(@"Attempting to get Node at index in a list with no elements");
+		CWLogInfo(@"Attempting to get Node at index in a list with no elements");
 		return nil;
 	}
 	if (index > maxCount) {
-		CWLog(@"Index %lu is beyond List bounds %lu",
-			(unsigned long)index,(unsigned long)maxCount)
+		CWLogInfo(@"Index %lu is beyond List bounds %lu",
+				  (unsigned long)index,(unsigned long)maxCount);
 		return nil;
 	}
 	
@@ -224,7 +224,7 @@ do { \
 
 -(CWLinkedList *)linkedListWithRange:(NSRange)range {
 	if ((range.length + range.location) > (self.count - 1)) {
-		CWLog(@"Range beyond bounds... Exiting now...");
+		CWLogInfo(@"Range beyond bounds... Exiting now...");
 		return nil;
 	}
 	
