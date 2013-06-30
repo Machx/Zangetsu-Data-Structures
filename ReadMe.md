@@ -1,6 +1,6 @@
 # Zangetsu Data Structures
 
-Zangetsu Data Structures is a subsection of the [Zangetsu Framework](https://github.com/Machx/Zangetsu) that is now an independent repository of its own. Although these classes can still be used in the Zangetsu Framework, these Data structures should not use any API's that make them dependent on the Zangetsu framework. 
+Zangetsu Data Structures is a subsection of the [Zangetsu Framework](https://github.com/Machx/Zangetsu) that is now an independent repository of its own. Although these classes can still be used in the Zangetsu Framework, these Data structures should not use any API's that make them dependent on the Zangetsu framework. The Zangetsu Data Structures do make use of [CWLogging](https://github.com/Machx/CWLogging) for compile time logging.
 
 ## Unit Tests
 
