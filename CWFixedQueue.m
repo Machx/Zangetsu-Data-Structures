@@ -67,8 +67,8 @@
 	return [NSString stringWithFormat:@"%@: Label: %@\nItem Count: %lu\nCapacity: %lu\nItems: %@",
 			NSStringFromClass([self class]),
 			self.label,
-			self.count,
-			self.capacity,
+			(unsigned long)self.count,
+			(unsigned long)self.capacity,
 			self.storage];
 }
 
