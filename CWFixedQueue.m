@@ -123,7 +123,7 @@
 
 #pragma mark Enumeration -
 
--(void)enumerateContents:(void (^)(id object, NSUInteger index, BOOL *stop))block {
+-(void)enumerateObjectsUsingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block {
 	[self.storage enumerateObjectsUsingBlock:block];
 }
 
