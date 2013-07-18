@@ -50,7 +50,7 @@ it(@"should enqueue & dequeue objects as expected", ^{
 	[queue enqueue:@"Everybody!"];
 	expect(queue.count == 2).to.beTruthy();
 	
-	[queue enumerateContents:^(id object, NSUInteger index, BOOL *stop) {
+	[queue enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 		if (index == 0) {
 			expect(object).to.equal(@"News");
 		} else if (index == 1) {
@@ -74,7 +74,7 @@ describe(@"-enqueueObjectsFromArray", ^{
 		[queue enqueueObjectsInArray:@[ @"Nope",@"Everybody Watch",@"Hypnotoad" ]];
 		expect(queue.count == 2).to.beTruthy();
 		
-		[queue enumerateContents:^(id object, NSUInteger index, BOOL *stop) {
+		[queue enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			if (index == 0) {
 				expect(object).to.equal(@"Everybody Watch");
 			} else if (index == 1) {
@@ -130,7 +130,7 @@ describe(@"enumeration operations", ^{
 	it(@"should enumerate contents in the order expected forward", ^{
 		//test forward
 		__block NSUInteger count = 0;
-		[queue enumerateContents:^(id object, NSUInteger index, BOOL *stop) {
+		[queue enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			if (count == 0) {
 				expect(object).to.equal(@"Everybody Watch");
 			} else if (count == 1) {
@@ -144,7 +144,7 @@ describe(@"enumeration operations", ^{
 	
 	it(@"should be able to enumerate contents concurrently", ^{
 		__block int32_t count = 0;
-		[queue enumerateContentsWithOptions:NSEnumerationConcurrent usingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		[queue enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			if (count == 0) {
 				expect(object).to.equal(@"Everybody Watch");
 			} else if (count == 1) {
@@ -158,7 +158,7 @@ describe(@"enumeration operations", ^{
 	
 	it(@"should be able to enumerate in reverse", ^{
 		__block NSUInteger count = 0;
-		[queue enumerateContentsWithOptions:NSEnumerationReverse usingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		[queue enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			if (count == 1) {
 				expect(object).to.equal(@"Everybody Watch");
 			} else if (count == 0) {
