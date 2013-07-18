@@ -162,7 +162,7 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
  @param index The objects position in the queue
  @param stop set this to YES to stop enumeration at any time
  */
--(void)enumerateContentsWithOptions:(NSEnumerationOptions)options
-						 usingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block;
+-(void)enumerateObjectsWithOptions:(NSEnumerationOptions)options
+						usingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block;
 
 @end

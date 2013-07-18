@@ -127,8 +127,8 @@
 	[self.storage enumerateObjectsUsingBlock:block];
 }
 
--(void)enumerateContentsWithOptions:(NSEnumerationOptions)options
-						 usingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block {
+-(void)enumerateObjectsWithOptions:(NSEnumerationOptions)options
+						usingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block {
 	[self.storage enumerateObjectsWithOptions:options
 								   usingBlock:block];
 }
