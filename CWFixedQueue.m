@@ -76,13 +76,16 @@
 	return self.storage.count;
 }
 
-#pragma mark Objective-C Object Subscription -
+#pragma mark Objective-C Object Subscript Methods -
 
 -(id)objectAtIndexedSubscript:(NSUInteger)index {
+	CWAssert(index <= (self.storage.count - 1));
 	return [self.storage objectAtIndexedSubscript:index];
 }
 
 -(void)setObject:(id)object atIndexedSubscript:(NSUInteger)idx {
+	CWAssert(object != nil);
+	CWAssert(idx <= (self.storage.count - 1));
 	[self.storage setObject:object
 		 atIndexedSubscript:idx];
 }
