@@ -56,9 +56,9 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 @interface CWFixedQueue : NSObject
 
 /**
- Initializes the Queue and sets the capacity property to the NSUInteger passed in
+ Initializes the Queue & sets the capacity property to the NSUInteger passed in
  
- @param capacity a NSUInteger that limits the queue to this number of items it should contain
+ @param capacity a NSUInteger that limits the queue to this number of items
  @return a new CWFixedQueue instance
  */
 -(id)initWithCapacity:(NSUInteger)capacity;
@@ -78,9 +78,9 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 /**
  The eviction block is called just before an Object is evicted from the Queue
  
- Providing an eviction block to the queue gives you a chance to do something with
- an object before it is evicted, otherwise it will simply remove the item from
- the queue and not notify you.
+ Providing an eviction block to the queue gives you a chance to do something 
+ with an object before it is evicted, otherwise it will simply remove the item 
+ from the queue and not notify you.
  */
 @property(copy) CWFixedQueueEvictionBlock evictionBlock;
 
@@ -121,8 +121,8 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
  Returns the object at the given index. This method matches NSArrays behavior.
 
  This method is present to support Objective-C's Object subscripting syntax.
- Just like NSArray, this method will throw a NSRangeException if the index
- given is beyond the bounds of the queue.
+ If index is beyond the bounds of the array this method will log a message
+ about the failing condition and throw an assertion.
 
  @param index the slot whose corresponding object is to be retrieved
  @return the object at the given subscript
@@ -130,7 +130,10 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 -(id)objectAtIndexedSubscript:(NSUInteger)index;
 
 /**
- Sets the object at the given index. This method matches NSArrays behavior.
+ Sets the object at the given index.
+ 
+ If object is nil or if the index is beyond the bounds of the array then this
+ method will throw an assertion.
 
  @param object the object to be retained by the collection and accessible at idx
  @param idx the index that object is to be inserted at
@@ -146,6 +149,8 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 
 /**
  Enumerates over the queue contents using a block
+ 
+ If block is nil this method will throw an assertion.
 
  @param object The object currently being enumerated over
  @param index The objects position in the queue
@@ -154,9 +159,11 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
 -(void)enumerateObjectsUsingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block;
 
 /**
- Enumerates over the queue using a block allowing you to pass options for how to enumerate it
+ Enumerates over the queue using a block
  
- @param options NSEnumerationOptions for how to enumerate the queue, same as NSArrays options
+ If block is nil this method will throw an assertion.
+ 
+ @param options NSEnumerationOptions same as NSArrays options
  @param block the block to be called for enumerating the block
  @param object The object currently being enumerated over
  @param index The objects position in the queue
