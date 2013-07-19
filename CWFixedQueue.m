@@ -127,11 +127,13 @@
 #pragma mark Enumeration -
 
 -(void)enumerateObjectsUsingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block {
+	CWAssert(block != nil);
 	[self.storage enumerateObjectsUsingBlock:block];
 }
 
 -(void)enumerateObjectsWithOptions:(NSEnumerationOptions)options
 						usingBlock:(void (^)(id object, NSUInteger index, BOOL *stop))block {
+	CWAssert(block != nil);
 	[self.storage enumerateObjectsWithOptions:options
 								   usingBlock:block];
 }
