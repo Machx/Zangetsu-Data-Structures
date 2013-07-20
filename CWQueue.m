@@ -159,7 +159,9 @@ static int64_t queueCounter = 0;
 	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
 		__typeof(wself) __strong sself = wself;
-		object = sself.dataStore[0] ?: nil;
+		if (sself.dataStore.count >= 1) {
+			object = sself.dataStore[0];
+		}
 	});
 	return object;
 }
