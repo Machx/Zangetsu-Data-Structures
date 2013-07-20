@@ -65,7 +65,7 @@ static int64_t queueCounter = 0;
  */
 -(id)init {
 	self = [super init];
-	if (!self) return nil;
+	if (self == nil) return nil;
 	
 	_dataStore = [NSMutableArray array];
 	const char *label = [[NSString stringWithFormat:@"com.Zangetsu.CWStack_%lli",
@@ -77,7 +77,7 @@ static int64_t queueCounter = 0;
 
 -(id)initWithObjectsFromArray:(NSArray *)array {
 	self = [super init];
-	if (!self) return nil;
+	if (self == nil) return nil;
 	
 	_dataStore = [NSMutableArray arrayWithArray:array];
 	const char *label = [[NSString stringWithFormat:@"com.Zangetsu.CWStack_%lli",
