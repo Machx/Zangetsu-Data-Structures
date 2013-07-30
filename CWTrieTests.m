@@ -65,12 +65,16 @@ it(@"shouldn't distinguish between uppercase & lowercase if set to", ^{
 	expect([trie objectValueForKey:@"fRy"]).to.equal(@"Bender");
 });
 
-it(@"should remove values for keys", ^{
-	[trie setObjectValue:@"Bender" forKey:@"Fry"];
-	
-	expect([trie objectValueForKey:@"Fry"]).to.equal(@"Bender");
-	
-	[trie removeObjectValueForKey:@"Fry"];
+describe(@"removing values", ^{
+	it(@"should remove values for keys", ^{
+		[trie setObjectValue:@"Bender" forKey:@"Fry"];
+		
+		expect([trie objectValueForKey:@"Fry"]).to.equal(@"Bender");
+		
+		[trie removeObjectValueForKey:@"Fry"];
+		
+		expect([trie objectValueForKey:@"Fry"]).to.beNil();
+	});
 	
 	expect([trie objectValueForKey:@"Fry"]).to.beNil();
 });
