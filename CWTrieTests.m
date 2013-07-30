@@ -76,7 +76,15 @@ describe(@"removing values", ^{
 		expect([trie objectValueForKey:@"Fry"]).to.beNil();
 	});
 	
-	expect([trie objectValueForKey:@"Fry"]).to.beNil();
+	it(@"-removeObject... should have the same effect as setObjectValue:nil", ^{
+		[trie setObjectValue:@42 forKey:@"MagicNumber"];
+		
+		expect([trie objectValueForKey:@"MagicNumber"]).to.equal(@42);
+		
+		[trie setObjectValue:nil forKey:@"MagicNumber"];
+		
+		expect([trie objectValueForKey:@"MagicNumber"]).to.beNil();
+	});
 });
 
 SpecEnd
