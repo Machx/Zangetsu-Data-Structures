@@ -34,7 +34,7 @@
 #import "CWFixedQueue.h"
 
 @interface CWFixedQueue()
-@property(retain) NSMutableArray *storage;
+@property(strong) NSMutableArray *storage;
 @end
 
 @implementation CWFixedQueue
