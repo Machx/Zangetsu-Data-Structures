@@ -45,8 +45,8 @@ do { \
 #endif
 
 @interface CWLinkedListNode : NSObject
-@property(retain) id data;
-@property(retain) CWLinkedListNode *next;
+@property(strong) id data;
+@property(strong) CWLinkedListNode *next;
 @property(weak) CWLinkedListNode *prev;
 @end
 
@@ -72,7 +72,7 @@ do { \
 
 @interface CWLinkedList ()
 @property(readwrite, assign) NSUInteger count;
-@property(retain) CWLinkedListNode *head;
+@property(strong) CWLinkedListNode *head;
 @property(weak) CWLinkedListNode *tail;
 @end
 
