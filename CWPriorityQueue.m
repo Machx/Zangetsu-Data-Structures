@@ -43,7 +43,7 @@ do { \
 #endif
 
 @interface CWPriorityQueueItem : NSObject
-@property(retain) id item;
+@property(strong) id item;
 @property(assign) NSUInteger priority;
 @end
 
@@ -76,7 +76,7 @@ do { \
 @end
 
 @interface CWPriorityQueue ()
-@property(retain) NSMutableArray *storage;
+@property(strong) NSMutableArray *storage;
 @end
 
 @implementation CWPriorityQueue
