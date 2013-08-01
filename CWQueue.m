@@ -36,8 +36,8 @@
 
 @interface CWQueue()
 //private internal ivar
-@property(retain) NSMutableArray *dataStore;
-@property(assign) dispatch_queue_t queue;
+@property(nonatomic, strong) NSMutableArray *dataStore;
+@property(nonatomic, assign) dispatch_queue_t queue;
 @end
 
 static int64_t queueCounter = 0;
