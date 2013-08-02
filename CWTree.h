@@ -47,7 +47,7 @@
 
  @return the id value the node is containing
  */
-@property(retain) id value;
+@property(strong) id value;
 
 /**
  Parent Object which is also a CWTreeNode
@@ -61,7 +61,7 @@
 
  @return the nodes children in the tree
  */
-@property(readonly, retain) NSMutableArray *children;
+@property(readonly, strong) NSMutableArray *children;
 
 /**
  Key to set if a node allows duplicate children
@@ -145,7 +145,7 @@
 /**
  Pointer to the root node of the tree of nodes
  */
-@property(retain) CWTreeNode *rootNode;
+@property(strong) CWTreeNode *rootNode;
 
 /**
  Enumerates a CWTree object object on a level by level basis.
