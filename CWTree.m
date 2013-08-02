@@ -35,7 +35,7 @@
 #import "CWQueue.h" // enumeration support
 
 @interface CWTreeNode()
-@property(readwrite, retain) NSMutableArray *children;
+@property(readwrite, strong) NSMutableArray *children;
 @end
 
 @implementation CWTreeNode
@@ -50,7 +50,7 @@
     if (self == nil) return nil;
 	
 	_value = nil;
-	_children = [[NSMutableArray alloc] init];
+	_children = [NSMutableArray array];
 	_parent = nil;
 	_allowsDuplicates = YES;
 	
@@ -62,7 +62,7 @@
     if (self == nil) return nil;
 	
 	_value = aValue;
-	_children = [[NSMutableArray alloc] init];
+	_children = [NSMutableArray array];
 	_parent = nil;
 	
     return self;
