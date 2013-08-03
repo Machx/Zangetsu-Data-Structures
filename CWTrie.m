@@ -50,7 +50,7 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 @interface CWTrieNode : NSObject
 @property(copy) NSString *key;
 @property(strong) id value;
-@property(strong) NSMutableSet *children;
+@property(copy) NSMutableSet *children;
 @end
 
 @implementation CWTrieNode
