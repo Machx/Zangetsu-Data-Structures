@@ -220,6 +220,7 @@ static int64_t queueCounter = 0;
 
 -(void)dealloc {
 	dispatch_release(_queue);
+	_queue = nil;
 }
 
 @end
