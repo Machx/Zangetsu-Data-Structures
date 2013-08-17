@@ -59,7 +59,7 @@ do { \
     return self;
 }
 
-+(CWPriorityQueueItem *)itemWithObject:(id)object
++(instancetype)itemWithObject:(id)object
 				  andPriority:(NSUInteger)priority {
 	CWAssert(object != nil);
 	CWPriorityQueueItem *queueItem = [self new];
