@@ -143,7 +143,7 @@ static int64_t queueCounter = 0;
 
 -(BOOL)containsObjectWithBlock:(BOOL (^)(id obj))block {
 	__block BOOL contains = NO;
-	__typeof(self) wself = self;
+	__typeof(self) __weak wself = self;
 	dispatch_sync(self.queue, ^{
 		__typeof(wself) __strong sself = wself;
 		NSUInteger index = [sself.dataStore indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
