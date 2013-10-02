@@ -61,7 +61,7 @@ typedef void (^CWFixedQueueEvictionBlock)(id evictedObject);
  @param capacity a NSUInteger that limits the queue to this number of items
  @return a new CWFixedQueue instance
  */
--(id)initWithCapacity:(NSUInteger)capacity;
+-(instancetype)initWithCapacity:(NSUInteger)capacity;
 
 /**
  An optional label you can apply for debugging purposes

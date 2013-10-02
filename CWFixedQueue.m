@@ -39,7 +39,7 @@
 
 @implementation CWFixedQueue
 
--(id)initWithCapacity:(NSUInteger)capacity {
+-(instancetype)initWithCapacity:(NSUInteger)capacity {
 	self = [super init];
 	if (self == nil) return nil;
 	
@@ -50,7 +50,7 @@
 	return self;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self == nil) return nil;
 	
