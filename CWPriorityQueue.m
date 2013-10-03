@@ -49,7 +49,7 @@ do { \
 
 @implementation CWPriorityQueueItem
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self == nil) return nil;
 	
@@ -81,7 +81,7 @@ do { \
 
 @implementation CWPriorityQueue
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (!self) return nil;
 	
