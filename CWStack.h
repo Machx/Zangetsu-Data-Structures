@@ -52,7 +52,7 @@
  @param objects a NSArray whose contents you want a CWStack object initialized with
  @return an intialized CWStack object
  */
--(id)initWithObjectsFromArray:(NSArray *)objects;
+-(instancetype)initWithObjectsFromArray:(NSArray *)objects;
 
 /**
  Pushes an object onto the stack

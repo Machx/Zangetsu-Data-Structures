@@ -48,7 +48,7 @@ static int64_t queueCounter = 0;
  
  @return a empty CWStack instance
  */
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self == nil) return nil;
 	
@@ -60,7 +60,7 @@ static int64_t queueCounter = 0;
     return self;
 }
 
--(id)initWithObjectsFromArray:(NSArray *)objects {
+-(instancetype)initWithObjectsFromArray:(NSArray *)objects {
 	self = [super init];
 	if (self == nil) return nil;
 	
