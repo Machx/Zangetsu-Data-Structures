@@ -63,7 +63,7 @@ static int64_t queueCounter = 0;
  
  @return a CWQueue object ready to accept objects to be added to it.
  */
--(id)init {
+-(instancetype)init {
 	self = [super init];
 	if (self == nil) return nil;
 	
@@ -75,7 +75,7 @@ static int64_t queueCounter = 0;
 	return self;
 }
 
--(id)initWithObjectsFromArray:(NSArray *)array {
+-(instancetype)initWithObjectsFromArray:(NSArray *)array {
 	self = [super init];
 	if (self == nil) return nil;
 	

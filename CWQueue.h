@@ -60,7 +60,7 @@
  @param array a NSArray to initialize the contents of the Queue with
  @return an initialized CWQueue instance object
  */
--(id)initWithObjectsFromArray:(NSArray *)array;
+-(instancetype)initWithObjectsFromArray:(NSArray *)array;
 
 /**
  Adds a object to the receiving objects queue
