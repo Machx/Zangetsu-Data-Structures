@@ -105,6 +105,7 @@
 }
 
 -(void)enqueueObjectsInArray:(NSArray *)array {
+	CWAssert(array != nil);
 	if(array.count == 0) return;
 	[self.storage addObjectsFromArray:array];
 	[self clearExcessObjects];
