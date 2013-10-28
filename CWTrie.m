@@ -109,13 +109,14 @@ BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
 }
 
 /**
- * Private API
- * Performs validation for node character lookups, and returns a BOOL
- * if the string passes as valid or not. If the character is not valid
- * this method will Log a reason why before exiting.
- *
- * @param character NSString to be examined for invalid states
- * @return YES if valid, NO if not
+ Validates a Character for looking up a node
+ 
+ Performs validation for node character lookups, and returns a BOOL
+ if the string passes as valid or not. If the character is not valid
+ this method will Log a reason why before exiting.
+ 
+ @param character NSString to be examined for invalid states
+ @return YES if valid, NO if not
  */
 BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
 	if (character == nil) {
