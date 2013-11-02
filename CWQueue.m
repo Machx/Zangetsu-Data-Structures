@@ -37,7 +37,7 @@
 @interface CWQueue()
 //private internal ivar
 @property(nonatomic, copy) NSMutableArray *dataStore;
-@property(nonatomic, assign) dispatch_queue_t queue;
+@property(nonatomic) dispatch_queue_t queue;
 @end
 
 static int64_t queueCounter = 0;
@@ -249,11 +249,6 @@ static int64_t queueCounter = 0;
 		isEqual = [sself.dataStore isEqual:aQueue.dataStore];
 	});
 	return isEqual;
-}
-
--(void)dealloc {
-	dispatch_release(_queue);
-	_queue = nil;
 }
 
 @end

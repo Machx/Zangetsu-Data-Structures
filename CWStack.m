@@ -36,7 +36,7 @@
 
 @interface CWStack()
 @property(nonatomic, strong) NSMutableArray *dataStore;
-@property(nonatomic, assign) dispatch_queue_t queue;
+@property(nonatomic) dispatch_queue_t queue;
 @end
 
 static int64_t queueCounter = 0;
@@ -216,11 +216,6 @@ static int64_t queueCounter = 0;
 		theCount = sself.dataStore.count;
 	});
 	return theCount;
-}
-
--(void)dealloc {
-	dispatch_release(_queue);
-	_queue = nil;
 }
 
 @end
