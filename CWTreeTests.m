@@ -67,7 +67,6 @@ describe(@"-isEqualToTree", ^{
 });
 
 describe(@"-enumerateTreeWithBlock", ^{
-	//TODO: move the tree creation code here?
 	CWTree *tree = [[CWTree alloc] initWithRootNodeValue:@"1"];
 	CWTreeNode *node2 = [[CWTreeNode alloc] initWithValue:@"2"];
 	[[tree rootNode] addChild:node2];
