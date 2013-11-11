@@ -33,6 +33,8 @@
 
 #import "CWFixedQueue.h"
 
+#define kCWFixedQueueDefaultCapacity 50
+
 @interface CWFixedQueue()
 @property(strong) NSMutableArray *storage;
 @end
@@ -55,7 +57,7 @@
     if (self == nil) return nil;
 	
 	_storage = [NSMutableArray array];
-	_capacity = 50;
+	_capacity = kCWFixedQueueDefaultCapacity;
 	_evictionBlock = nil;
 	
     return self;
