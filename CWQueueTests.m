@@ -199,7 +199,7 @@ describe(@"-enumerateObjectsInQueue", ^{
 			} else if (index == 5) {
 				expect(object).to.equal(@"5");
 			} else {
-				STFail(@"should not reach here");
+				XCTFail(@"should not reach here");
 			}
 		}];
 	});

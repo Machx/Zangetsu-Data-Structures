@@ -56,7 +56,7 @@ it(@"should enqueue & dequeue objects as expected", ^{
 		} else if (index == 1) {
 			expect(object).to.equal(@"Everybody!");
 		} else {
-			STFail(@"Enumerated past bounds");
+			XCTFail(@"enumerated past bounds");
 		}
 	}];
 	
@@ -80,7 +80,7 @@ describe(@"-enqueueObjectsFromArray", ^{
 			} else if (index == 1) {
 				expect(object).to.equal(@"Hypnotoad");
 			} else {
-				STFail(@"Enumerated past bounds");
+				XCTFail(@"Enumerated past bounds");
 			}
 		}];
 	});
@@ -136,7 +136,7 @@ describe(@"enumeration operations", ^{
 			} else if (count == 1) {
 				expect(object).to.equal(@"Hypnotoad");
 			} else {
-				STFail(@"Enumerated past expected bounds");
+				XCTFail(@"Enumerated past expected bounds");
 			}
 			++count;
 		}];
@@ -150,7 +150,7 @@ describe(@"enumeration operations", ^{
 			} else if (count == 1) {
 				expect(object).to.equal(@"Hypnotoad");
 			} else {
-				STFail(@"Enumerated past expected bounds");
+				XCTFail(@"Enumerated past expected bounds");
 			}
 			OSAtomicIncrement32(&count);
 		}];
@@ -164,7 +164,7 @@ describe(@"enumeration operations", ^{
 			} else if (count == 0) {
 				expect(object).to.equal(@"Hypnotoad");
 			} else {
-				STFail(@"Enumerated past expected bounds");
+				XCTFail(@"Enumerated past expected bounds");
 			}
 			++count;
 		}];

@@ -85,7 +85,7 @@ describe(@"-popToObject:withBlock:", ^{
 			} else if (index == 2) {
 				expect(obj).to.equal(@"is");
 			} else {
-				STFail(@"We have enumerated past the expected bounds");
+				XCTFail(@"We have enumerated past the expected bounds");
 			}
 			index++;
 		}];
