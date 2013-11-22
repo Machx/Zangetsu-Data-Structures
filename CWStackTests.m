@@ -95,17 +95,16 @@ describe(@"-popToObject:withBlock:", ^{
 describe(@"-clearStack", ^{
 	it(@"should clear all the objects off a stack", ^{
 		CWStack *stack1 = [[CWStack alloc] initWithObjectsFromArray:@[@"one",@"and",@"two"]];
-		CWStack *stack2 = [[CWStack alloc] initWithObjectsFromArray:@[@"foo",@"bar"]];
 		
 		expect(stack1.count == 3).to.beTruthy();
-		expect(stack2.count == 2).to.beTruthy();
 		
 		[stack1 clearStack];
-		[stack2 clearStack];
 		
 		expect(stack1.count == 0).to.beTruthy();
-		expect(stack2.count == 0).to.beTruthy();
-		expect([stack1 isEqualToStack:stack2]).to.beTruthy();
+        
+        CWStack *emptyStack = [[CWStack alloc] init];
+        
+		expect([stack1 isEqualToStack:emptyStack]).to.beTruthy();
 	});
 });
 
