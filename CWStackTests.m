@@ -31,7 +31,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "CWStackTests.h"
 #import "CWStack.h"
 
 //TODO: these unit tests can be improved a lot more

@@ -30,7 +30,6 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "CWFixedQueueTests.h"
 #import "CWFixedQueue.h"
 
 SpecBegin(CWFixedQueue)
