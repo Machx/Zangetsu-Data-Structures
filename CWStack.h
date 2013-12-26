@@ -81,6 +81,16 @@
 
 #ifdef CWSTACK_PEEKING
 
+/**
+ Accesses the object at the specified index
+ 
+ This method has the same behavior as NSArray object subscripting because 
+ internally it just forwards this same method onto its internal NSArray ivar,
+ but in a thread safe manner.
+ 
+ @param index A specified index to access the object at
+ @return the object at the specified index
+ */
 -(id)objectAtIndexedSubscript:(NSUInteger)index;
 
 #endif
