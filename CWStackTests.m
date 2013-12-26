@@ -31,6 +31,11 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+//so we can test subscript access
+#ifndef CWSTACK_PEEKING
+#define CWSTACK_PEEKING
+#endif
+
 #import "CWStack.h"
 
 //TODO: these unit tests can be improved a lot more
@@ -90,6 +95,16 @@ describe(@"-popToObject:withBlock:", ^{
 		}];
 	});
 });
+
+#ifdef CWSTACK_PEEKING
+describe(@"subscript access aka peeking", ^{
+    CWStack *stack = [[CWStack alloc] initWithObjectsFromArray:@[@1,@2,@3,@4,@5]];
+    
+    it(@"should access the correct elements", ^{
+        expect(stack[0]).to.equal(@1);
+    });
+});
+#endif
 
 describe(@"-clearStack", ^{
 	it(@"should clear all the objects off a stack", ^{
