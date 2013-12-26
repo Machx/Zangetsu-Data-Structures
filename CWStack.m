@@ -131,6 +131,20 @@ static int64_t queueCounter = 0;
 	return object;
 }
 
+#ifdef CWSTACK_PEEKING
+
+-(id)objectAtIndexedSubscript:(NSUInteger)index {
+    __block id object;
+    __typeof(self) __weak wself = self;
+    dispatch_sync(self.queue, ^{
+        __typeof(wself) __strong sself = wself;
+        object = [sself.dataStore objectAtIndexedSubscript:index];
+    });
+    return object;
+}
+
+#endif
+
 -(id)bottomOfStackObject {
 	__block id object = nil;
 	__typeof(self) __weak wself = self;

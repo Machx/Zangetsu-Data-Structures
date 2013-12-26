@@ -43,6 +43,14 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ If uncommented (defined) then this enables Stack Peeking or Subscript access to
+ read abitrary indexes within the receivers bounds.
+ */
+#ifndef CWSTACK_PEEKING
+#define CWSTACK_PEEKING
+#endif
+
 @interface CWStack : NSObject
 /**
  initializes a CWStack object with the content of the array passed in
@@ -70,6 +78,12 @@
  @return the object at the top of the stack
  */
 -(id)pop;
+
+#ifdef CWSTACK_PEEKING
+
+-(id)objectAtIndexedSubscript:(NSUInteger)index;
+
+#endif
 
 /**
  continuously pops objects off the stack until the object specified is found
