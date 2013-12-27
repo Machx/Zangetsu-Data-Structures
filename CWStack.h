@@ -52,12 +52,13 @@
 #endif
 
 @interface CWStack : NSObject
+
 /**
  initializes a CWStack object with the content of the array passed in
  
  If the NSArray passed in has at least 1 object
  
- @param objects a NSArray whose contents you want a CWStack object initialized with
+ @param objects an array to initialize the contents of a CWStack object with
  @return an intialized CWStack object
  */
 -(instancetype)initWithObjectsFromArray:(NSArray *)objects;
@@ -73,7 +74,7 @@
 -(void)push:(id)object;
 
 /**
- pops an object off of the top of the CWStack object and returns that popped object
+ pops an object off of the top of the CWStack object and returns that object
  
  @return the object at the top of the stack
  */
@@ -98,22 +99,24 @@
 /**
  continuously pops objects off the stack until the object specified is found
  
- popToObject pops all objects off the stack until it finds the object specified in the 
- passed in value. If the object is not in the stack it returns nil immediately, otherwise 
- a NSArray containing all objects popped off the stack before the object specified is returned
+ popToObject pops all objects off the stack until it finds the object specified
+ in the passed in value. If the object is not in the stack it returns nil 
+ immediately, otherwise a NSArray containing all objects popped off the stack 
+ before the object specified is returned
  
  @param object the object you wish the stack to be popped off to
- @return nil if the object is not in the array otherwise a NSArray of all popped off objects
+ @return an array of all popped off objects, or nil if object is not in receiver
  */
 -(NSArray *)popToObject:(id)object;
 
 /**
- pops to the object in the stack, for each object encountered the block is called passing in the object encountered
+ pops to object and calls block for each popped off object as it pops off
  
- If the object provided does not exist in the stack then the method returns immediately 
+ If the object provided does not exist in the stack then the method returns 
+ immediately
  
  @param object The object you wish to pop the stack to
- @param block the block that will be executed upon encountering each object in the stack until the object specified is found
+ @param block the block that will be called as objects are popped off
  */
 -(void)popToObject:(id)object withBlock:(void (^)(id obj))block;
 
@@ -144,29 +147,30 @@
 -(void)clearStack;
 
 /**
- checks to see if the stack contents of another CWStack object are the same compared to the receiver
+ checks to see if the stack contents of another CWStack object are the same
  
- first checks to see if the other object is a CWStack Object and then checks to see if their contents
- are the same. This method does this by comparing the string description of the contents to the receivers
- string description of its contents. This way is used currently because the private ivar that holds the 
- contents is hidden and never exposed in the public header for CWStack. This is as close to direct ivar
- access to private contents that you will get in CWStack.
- 
- @param object another CWStack object which you wish to compare its contents to against the receiver object
- @return a BOOL with YES if the 2 stack objects have the same contents or NO if they don't
+ first checks to see if the other object is a CWStack Object and then checks to 
+ see if their contents are the same. This method does this by comparing the 
+ string description of the contents to the receivers string description of its 
+ contents. This way is used currently because the private ivar that holds the 
+ contents is hidden and never exposed in the public header for CWStack. This is 
+ as close to direct ivar access to private contents that you will get in CWStack
+
+ @param object another CWStack object which you wish to compare its contents to
+ @return a BOOL with YES if the 2 stack objects have the same contents or NO
  */
 -(BOOL)isEqualToStack:(CWStack *)aStack;
 
 /**
- Returns a bool indicating if the pass in object is contained in the CWStack storage
+ Returns a bool indicating if the pass in object is contained in the stack
  
- @param object any NSObject subclass instance you wish to see if its contained in the stack
- @return a BOOL with a value of YES if the object is contained in the stack, otherwise NO
+ @param object An object you wish to see if its contained in the receiver
+ @return A BOOL value of YES if it is contained in the receiver, no otherwise
  */
 -(BOOL)containsObject:(id)object;
 
 /**
- Returns a BOOL indicating if any block call returned YES indicating the object was in the CWStack storage
+ Returns if the object is in the receiver using the block to compare objects
  
  @param block a block with a id object passed in and returning a BOOL
  @return a BOOL with yes if any block call returned yes, otherwise no
