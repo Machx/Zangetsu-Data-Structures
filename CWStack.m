@@ -131,7 +131,7 @@ static int64_t queueCounter = 0;
 	return object;
 }
 
-#ifdef CWSTACK_PEEKING
+#if CWSTACK_PEEKING
 
 -(id)objectAtIndexedSubscript:(NSUInteger)index {
     __block id object;

@@ -46,10 +46,9 @@
 /**
  If uncommented (defined) then this enables Stack Peeking or Subscript access to
  read abitrary indexes within the receivers bounds.
+ 1 = ON, 0 = OFF
  */
-#ifndef CWSTACK_PEEKING
-#define CWSTACK_PEEKING
-#endif
+#define CWSTACK_PEEKING 1
 
 @interface CWStack : NSObject
 
@@ -80,7 +79,7 @@
  */
 -(id)pop;
 
-#ifdef CWSTACK_PEEKING
+#if CWSTACK_PEEKING
 
 /**
  Accesses the object at the specified index
