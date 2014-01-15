@@ -1,6 +1,6 @@
 /*
  //  CWTrie.m
- //  ObjC_Playground
+ //  Zangetsu Data Structures
  //
  //  Created by Colin Wheeler on 12/31/13.
  //  Copyright (c) 2013 Colin Wheeler. All rights reserved.
