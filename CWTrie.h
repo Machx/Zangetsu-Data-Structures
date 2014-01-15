@@ -1,13 +1,10 @@
 /*
-//  CWTrie.h
-//  Zangetsu
-//
-//  Created by Colin Wheeler on 4/15/12.
-//  Copyright (c) 2012. All rights reserved.
-//
- 
- Copyright (c) 2013, Colin Wheeler
- All rights reserved.
+ //  CWTrie.h
+ //  Zangetsu Data Structures
+ //
+ //  Created by Colin Wheeler on 12/31/13.
+ //  Copyright (c) 2013 Colin Wheeler. All rights reserved.
+ //
  
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -31,62 +28,66 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-  /*
- This class should not make any use of the Zangetsu Framework API's so it can
- retain its independence and be used in other projects not making use of the
- Zangetsu Framework.
-  */
-
 #import <Foundation/Foundation.h>
 
-static NSString *const kZangetsuTrieErrorDomain = @"com.Zangetsu.CWTrie";
+/**
+ CWTrie
+ 
+ CWTrie is a Trie Data Structure that is built with pure Objective-C and is
+ thread safe. It uses a serial dispatch_queue_t to perform all operations to
+ ensure that they are executed serially. The set method is asynchronous, but all
+ get methods (objectValueForKey,containsKey,etc.) are synchronous. Optionally
+ it can be set so that the keys are case sensitive, but by default they are not.
+ */
 
 @interface CWTrie : NSObject
 
 /**
- Sets the Trie to be case sensitive or not for looking up/setting keys
+ Initializes & returns a new CWTrie instance
  
- By default Tries are case sensitive.
+ @return An initialized CWTrie instance
  */
-@property(assign) BOOL caseSensitive;
+-(instancetype)init;
 
 /**
- Returns the object value for a given key
+ Initializes & returns a new CWTrie instance
  
- If a given key exists in a trie instance then this method will return
- the corresponding value for that key. Otherwise this method will
- return nil if there is no value for the corresponding key or if the
- key doesn't exist in the trie instance.
- 
- @param aKey a NSString that corresponds to a key in the trie
- @return the corresponding value to a given key or nil
+ @param caseSensitive sets if the trie instace should use case sensitive keys
+ @return An initialized CWTrie instance
  */
--(id)objectValueForKey:(NSString *)aKey;
+-(instancetype)initWithCaseSensitiveKeys:(BOOL)caseSensitive;
 
 /**
- Sets a object value corresponding to the given key
+ Sets a key value pair in the trie
  
- This stores the value in a Trie format for a given key. For example
- If we were to store the value 1 for the key "Tent" and 2 for "Tennis"
- the node layout would look like
- 
- [Root] -> [T] -> [e] -> [n] -> [t(1)]
-                           \ -> [n] -> [i] -> [s(2)]
-
- Note that this method allows nil values to be set for keys. In fact
- this is how -removeObjectValueForKey: works, by calling this method
- and passing nil or aObject for a given key.
+ @param value the value for key. Must not be nil.
+ @param key the key for value. Must not be nil.
  */
--(void)setObjectValue:(id)aObject 
-			   forKey:(NSString *)aKey;
+-(void)setObjectValue:(id)value forKey:(NSString *)key;
 
 /**
- Removes a object value for a given key
+ Returns the object corresponding to key or nil if no such key is set
  
- This method essentially calls [self setObjectValue:nil forKey:aKey]
- setting nil for a given key. This does not remove the nodes for the
- given key, it simply sets the endpoint node value to nil.
+ @param key the key to be used to see if something exists. Must not be nil.
  */
--(void)removeObjectValueForKey:(NSString *)aKey;
+-(id)objectValueForKey:(NSString *)key;
+
+/**
+ Returns if the key passed in is contained in the receiver
+ 
+ @return a BOOL value indicating if the key is in the receiver. Must not be nil.
+ */
+-(BOOL)containsKey:(NSString *)key;
+
+/**
+ Removes the object value corresponding to key in the receiver
+ 
+ This method will try to find the key passed in, if at any time the trie can't
+ find it (it doesn't exist) then this method simply returns. Otherwise it
+ will simply set the value corresponding with key to nil and return.
+ 
+ @param key The key whose corresponding value should be removed. Must not be nil
+ */
+-(void)removeObjectValueForKey:(NSString *)key;
 
 @end

@@ -1,13 +1,10 @@
 /*
-//  CWTrie.m
-//  Zangetsu
-//
-//  Created by Colin Wheeler on 4/15/12.
-//  Copyright (c) 2012. All rights reserved.
-//
- 
- Copyright (c) 2013, Colin Wheeler
- All rights reserved.
+ //  CWTrie.m
+ //  ObjC_Playground
+ //
+ //  Created by Colin Wheeler on 12/31/13.
+ //  Copyright (c) 2013 Colin Wheeler. All rights reserved.
+ //
  
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -32,178 +29,235 @@
  */
 
 #import "CWTrie.h"
+#import <libkern/OSAtomic.h>
+#import "CWAssertionMacros.h"
 
-#ifndef CWConditionalLog
-#define CWConditionalLog(cond,args...) \
-do { \
-	if((cond)){ \
-		NSLog(@"%s L#%i: %@",__PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:args]); \
-	} \
-} while(0);
-#endif
+#define kCWTrieCacheLimit 2
 
-BOOL CWTrieNodeHasErrorForCharacter(NSString *character);
-
-//Log = 1, no logging = 0
-#define CWTRIE_VERBOSE_LOGGING 1
+#define CWTrieKey() self.caseSensitive ? [key UTF8String] : [[key uppercaseString] UTF8String]
 
 @interface CWTrieNode : NSObject
-@property(copy) NSString *key;
-@property(strong) id value;
+@property(assign) char key;
+@property(strong) id storedValue;
 @property(copy) NSMutableSet *children;
 @end
 
 @implementation CWTrieNode
 
-/**
- This should be the designated initializer 99.99% of the time
- */
-- (instancetype)initWithKey:(NSString *)nodeKey {
-	self = [super init];
-	if (self == nil) return nil;
-	
-	_key = nodeKey;
-	_value = nil;
-	_children = [NSMutableSet set];
-	
-	return self;
++(CWTrieNode *)nodeWithKey:(char)ch
+                   andValue:(id)aVal {
+    CWTrieNode *node = [self new];
+    node.key = ch;
+    node.storedValue = aVal;
+    return node;
 }
 
-- (instancetype)init {
+-(instancetype)init {
     self = [super init];
-    if (self == nil) return nil;
+    if(!self) return nil;
     
-	_key = nil;
-	_value = nil;
-	_children = [NSMutableSet set];
-	
-	return self;
-}
-
--(NSString *)description {
-	return [NSString stringWithFormat:@"CWTrieNode (\nKey: '%@'\nValue: %@\nChildren: %@\n)",
-			self.key,self.value,self.children];
-}
-
-@end
-
-@interface CWTrie()
-@property(strong) CWTrieNode *rootNode;
-@end
-
-@implementation CWTrie
-
-- (instancetype)init {
-    self = [super init];
-    if (self == nil) return nil;
-	
-	_rootNode = [[CWTrieNode alloc] init];
-	_caseSensitive = YES;
-	
+    _key = (char)NULL;
+    _storedValue = nil;
+    _children = [NSMutableSet set];
+    
     return self;
 }
 
--(NSString *)description {
-	return [NSString stringWithFormat:@"Trie (\nCase Sensitive: %@\nNodes: %@)",
-			(self.caseSensitive ? @"YES" : @"NO"),self.rootNode];
+/**
+ Creates a new node, sets its key to ch, adds the node to children & returns it
+ 
+ This is a convenience method to help with adding keys in a trie
+ 
+ @return the CWTrieNode added to the receivers children
+ */
+-(CWTrieNode *)setNodeForKeyValue:(char)ch {
+    CWTrieNode *node = [CWTrieNode new];
+    node.key = ch;
+    [self.children addObject:node];
+    return node;
 }
 
 /**
- Validates a Character for looking up a node
+ Searches the nodes children for the value ch and returns it or nil
  
- Performs validation for node character lookups, and returns a BOOL
- if the string passes as valid or not. If the character is not valid
- this method will Log a reason why before exiting.
- 
- @param character NSString to be examined for invalid states
- @return YES if valid, NO if not
+ @param ch the character value to search for in the children
+ @return the node whose key is ch or nil if no such node could be found
  */
-BOOL CWTrieNodeHasErrorForCharacter(NSString *character) {
-	if (character == nil) {
-		CWConditionalLog(CWTRIE_VERBOSE_LOGGING,
-						 @"Character to be looked up is nil");
-		return YES;
-	}
-	if (character.length == 0) {
-		CWConditionalLog(CWTRIE_VERBOSE_LOGGING,
-						 @"Character to be looked up is an empty string");
-		return YES;
-	}
-	return NO;
+-(CWTrieNode *)nodeForKeyValue:(char)ch {
+    CWTrieNode *result = nil;
+    for (CWTrieNode *node in self.children) {
+        if (node.key == ch) {
+            result = node;
+            break;
+        }
+    }
+    return result;
 }
 
-+(CWTrieNode *)nodeForCharacter:(NSString *)chr 
-						 inNode:(CWTrieNode *)aNode {
-	if (CWTrieNodeHasErrorForCharacter(chr)) return nil;
-	
-	NSString *aChar = (chr.length == 1 ? chr : [chr substringToIndex:1]);
-	__block CWTrieNode *node = nil;
-	[aNode.children enumerateObjectsUsingBlock:^(CWTrieNode *currentNode, BOOL *stop) {
-		if ([currentNode.key isEqualToString:aChar]) {
-			node = currentNode;
-			*stop = YES;
-		}
-	}];
-	return node;
+@end
+
+@interface CWTrie ()
+@property(assign) BOOL caseSensitive;
+@property(strong) CWTrieNode *root;
+@property(strong) dispatch_queue_t queue;
+@property(strong) NSCache *cache; //for holding the last value looked up by -containsKey
+@end
+
+static int64_t queue_counter = 0;
+
+@implementation CWTrie
+
+-(instancetype)init {
+    self = [super init];
+    if(!self) return self;
+    
+    _root = [CWTrieNode new];
+    _caseSensitive = NO;
+    _cache = [NSCache new];
+    [_cache setCountLimit:kCWTrieCacheLimit];
+    _queue = ({
+        NSString *label = [NSString stringWithFormat:@"%@%lli",
+                           NSStringFromClass([self class]),
+                           OSAtomicIncrement64(&queue_counter)];
+        dispatch_queue_t aQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
+        aQueue;
+    });
+    
+    return self;
 }
 
--(id)objectValueForKey:(NSString *)aKey {
-	if (aKey.length == 0) {
-		CWConditionalLog(CWTRIE_VERBOSE_LOGGING,
-						 @"Nil or 0 length key. Returning nil");
-		return nil;
-	}
-	
-	CWTrieNode *currentNode = self.rootNode;
-	const char *key = (self.caseSensitive ? [aKey UTF8String] : [[aKey lowercaseString] UTF8String]);
-	while (*key) {
-		NSString *aChar = [[NSString alloc] initWithBytes:key
-												   length:1
-												 encoding:NSUTF8StringEncoding];
-		CWTrieNode *node = [CWTrie nodeForCharacter:aChar
-											 inNode:currentNode];
-		if (node) {
-			currentNode = node;
-			key++;
-		} else {
-			return nil;
-		}
-	}
-	return currentNode.value;
+-(instancetype)initWithCaseSensitiveKeys:(BOOL)caseSensitive {
+    self = [super init];
+    if(!self) return self;
+    
+    _root = [CWTrieNode new];
+    _cache = [NSCache new];
+    [_cache setCountLimit:kCWTrieCacheLimit];
+    _caseSensitive = caseSensitive;
+    _queue = ({
+        NSString *label = [NSString stringWithFormat:@"%@%lli",
+                           NSStringFromClass([self class]),
+                           OSAtomicIncrement64(&queue_counter)];
+        dispatch_queue_t aQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
+        aQueue;
+    });
+    
+    return self;
 }
 
--(void)setObjectValue:(id)aObject 
-			   forKey:(NSString *)aKey {
-	if(aKey.length == 0) {
-		CWConditionalLog(CWTRIE_VERBOSE_LOGGING,
-						 @"Key is 0 length or nil, cannot set value");
-		return;
-	}
-	
-	CWTrieNode *currentNode = self.rootNode;
-	const char *key = (self.caseSensitive ? [aKey UTF8String] : [[aKey lowercaseString] UTF8String]);
-	
-	while (*key) {
-		NSString *aChar = [[NSString alloc] initWithBytes:key
-												   length:1
-												 encoding:NSUTF8StringEncoding];
-		CWTrieNode *node = [CWTrie nodeForCharacter:aChar
-											 inNode:currentNode];
-		if (node) {
-			currentNode = node;
-		} else {
-			CWTrieNode *aNode = [[CWTrieNode alloc] initWithKey:aChar];
-			[currentNode.children addObject:aNode];
-			currentNode = aNode;
-		}
-		key++;
-	}
-	if (![currentNode isEqual:self.rootNode]) currentNode.value = aObject;
+-(void)setObjectValue:(id)value
+               forKey:(NSString *)key {
+    CWAssert(value != nil);
+    CWAssert((key != nil) && (key.length >= 1));
+    
+    __weak CWTrieNode *weakRoot = self.root;
+    __weak NSCache *weakCache = self.cache;
+    dispatch_async(self.queue, ^{
+        const char *keyValue = CWTrieKey();
+        CWTrieNode *search = weakRoot;
+        NSCache *scache = weakCache;
+        
+        while (*keyValue) {
+            char sc = *keyValue;
+            CWTrieNode *nextNode = [search nodeForKeyValue:sc];
+            search = nextNode ?: [search setNodeForKeyValue:sc];
+            keyValue++;
+        }
+        search.storedValue = value;
+        [scache setObject:value forKey:key];
+    });
 }
 
--(void)removeObjectValueForKey:(NSString *)aKey {
-	[self setObjectValue:nil
-				  forKey:aKey];
+-(void)removeObjectValueForKey:(NSString *)key {
+    CWAssert((key != nil) && (key.length >= 1));
+    //remove object from cache if it exists
+    [self.cache removeObjectForKey:key];
+    /*
+     this is slightly different than setObjectValue:forKey: as it stops upon
+     encountering nil (in other words trying to remove a value for a key that
+     doesn't exist in the trie instance.) If it reaches its intended node it
+     sets the storedValue to nil, otherwise its just sending a message to nil.
+     */
+    __weak CWTrieNode *weakRoot = self.root;
+    dispatch_async(self.queue, ^{
+        const char *keyValue = CWTrieKey();
+        CWTrieNode *search = weakRoot;
+        while (*keyValue && (search != nil)) {
+            search = [search nodeForKeyValue:*keyValue];
+            keyValue++;
+        }
+        search.storedValue = nil;
+    });
+}
+
+-(BOOL)containsKey:(NSString *)key {
+    CWAssert((key != nil) && (key.length >= 1));
+    
+    __block BOOL contains = YES;
+    __weak CWTrieNode *weakRoot = self.root;
+    __weak CWTrie *weakSelf = self;
+    dispatch_sync(self.queue, ^{
+        CWTrie *sself = weakSelf;
+        CWTrieNode *node = weakRoot;
+        const char *theKey = CWTrieKey();
+        while (*theKey) {
+            node = [node nodeForKeyValue:*theKey];
+            if(node == nil) {
+                contains = NO;
+                break;
+            }
+            theKey++;
+        }
+        /*
+         we know that the key exists here in that we've enumerated over the
+         chars in the string we were given and they exist, but that doesn't
+         necessarily mean there is a node stored here. i.e. if someone stores
+         an object for the key @"hello" does the key @"he" exist? the nodes for
+         it exist but we need to check for a node value
+         */
+        if(node && (node.storedValue != nil)) {
+            /* this is convenient so you can do
+             if([trie containsKey:key]) {
+             id obj = [trie objectValueForKey:key];
+             ...
+             }
+             and we won't have to lookup the same value twice
+             */
+            [sself.cache setObject:node.storedValue forKey:key];
+        } else {
+            contains = NO;
+        }
+    });
+    return contains;
+}
+
+-(id)objectValueForKey:(NSString *)key {
+    CWAssert((key != nil) && (key.length >= 1));
+    
+    __block id result = nil;
+    __weak CWTrieNode *wroot = self.root;
+    __weak NSCache *weakCache = self.cache;
+    
+    dispatch_sync(self.queue, ^{
+        NSCache *trieCache = weakCache;
+        //check the cache first
+        id obj = [trieCache objectForKey:key];
+        if (obj) {
+            result = obj;
+            return;
+        }
+        
+        //object not in the cache... do the normal search...
+        CWTrieNode *node = wroot;
+        const char *keystr = CWTrieKey();
+        while (*keystr && (node != nil)) {
+            node = [node nodeForKeyValue:*keystr];
+            keystr++;
+        }
+        result = node.storedValue;
+    });
+    
+    return result;
 }
 
 @end
