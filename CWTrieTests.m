@@ -33,57 +33,84 @@
 
 #import "CWTrie.h"
 
-static CWTrie *trie = nil;
-
 SpecBegin(CWTrie)
 
-beforeAll(^{
-	trie = [CWTrie new];
+it(@"should store and retreieve a object", ^{
+    CWTrie *trie = [[CWTrie alloc] init];
+    
+    [trie setObjectValue:@"World!" forKey:@"Hello"];
+    
+    expect([trie objectValueForKey:@"Hello"]).to.equal(@"World!");
 });
 
-it(@"should be able to set & retrieve values for keys", ^{	
-	NSString *aKey = @"Hello";
-	NSString *aValue = @"World";
-	[trie setObjectValue:aValue forKey:aKey];
-	
-	//find key that does exist
-	NSString *foundValue = [trie objectValueForKey:aKey];
-	expect(foundValue).to.equal(aValue);
-	
-	//return nil for key that doesn't exist
-	expect([trie objectValueForKey:@"Foodbar"]).to.beNil();
-	expect([trie objectValueForKey:nil]).to.beNil();
+it(@"should return nil for objects it doesn't contain", ^{
+    CWTrie *trie = [[CWTrie alloc] init];
+    
+    expect([trie objectValueForKey:@"Hypnotoad"]).to.beNil();
 });
 
-it(@"shouldn't distinguish between uppercase & lowercase if set to", ^{
-	trie.caseSensitive = NO;
-	[trie setObjectValue:@"Bender" forKey:@"Fry"];
-	
-	expect([trie objectValueForKey:@"Fry"]).to.equal(@"Bender");
-	expect([trie objectValueForKey:@"FRY"]).to.equal(@"Bender");
-	expect([trie objectValueForKey:@"fRy"]).to.equal(@"Bender");
+describe(@"case sensitive", ^{
+    it(@"should return different values if case sensitive", ^{
+        CWTrie *trie = [[CWTrie alloc] initWithCaseSensitiveKeys:YES];
+        
+        [trie setObjectValue:@5 forKey:@"Yes"];
+        [trie setObjectValue:@4 forKey:@"yes"];
+        
+        expect([trie objectValueForKey:@"Yes"]).to.equal(@5);
+        expect([trie objectValueForKey:@"yes"]).to.equal(@4);
+    });
+    
+    it(@"should return the same value if not case sensitive", ^{
+        CWTrie *trie = [[CWTrie alloc] initWithCaseSensitiveKeys:NO];
+        
+        [trie setObjectValue:@5 forKey:@"Yes"];
+        [trie setObjectValue:@4 forKey:@"yes"];
+        
+        expect([trie objectValueForKey:@"yes"]).to.equal(@4);
+    });
 });
 
-describe(@"removing values", ^{
-	it(@"should remove values for keys", ^{
-		[trie setObjectValue:@"Bender" forKey:@"Fry"];
-		
-		expect([trie objectValueForKey:@"Fry"]).to.equal(@"Bender");
-		
-		[trie removeObjectValueForKey:@"Fry"];
-		
-		expect([trie objectValueForKey:@"Fry"]).to.beNil();
-	});
-	
-	it(@"-removeObject... should have the same effect as setObjectValue:nil", ^{
-		[trie setObjectValue:@42 forKey:@"MagicNumber"];
-		
-		expect([trie objectValueForKey:@"MagicNumber"]).to.equal(@42);
-		
-		[trie setObjectValue:nil forKey:@"MagicNumber"];
-		
-		expect([trie objectValueForKey:@"MagicNumber"]).to.beNil();
-	});
+describe(@"-containsKey", ^{
+    it(@"should detect if a key has been set", ^{
+        CWTrie *trie = [CWTrie new];
+        
+        expect([trie containsKey:@"Hypnotoad"]).to.beFalsy();
+        
+        [trie setObjectValue:@4 forKey:@"Hypnotoad"];
+        
+        expect([trie containsKey:@"Hypnotoad"]).to.beTruthy();
+    });
+    
+    it(@"should detect when a node exists, but not a stored value", ^{
+        /*
+         This detects that there is a stored value in a node and not that the
+         node simply exists. I.e. If we set the key "hello" we should be able to
+         detect that the nodes for "he" exist, but that there is no stored value
+         which corresponds to that key
+         */
+        CWTrie *trie = [CWTrie new];
+        
+        [trie setObjectValue:@4 forKey:@"hello"];
+        
+        expect([trie containsKey:@"he"]).to.beFalsy();
+        expect([trie containsKey:@"hello"]).to.beTruthy();
+    });
+});
+
+describe(@"cache tests", ^{
+    it(@"make sure the correct result is returned after using containsKey", ^{
+        CWTrie *trie = [CWTrie new];
+        
+        [trie setObjectValue:@4 forKey:@"Hypnotoad"];
+        
+        //-containsKey should store the value @4 in the cache
+        /* normally you'd use this like
+         if([trie containsKey:key]) {
+         id value = [trie objectValueForKey:key];
+         }*/
+        expect([trie containsKey:@"Hypnotoad"]).to.beTruthy();
+        expect([trie objectValueForKey:@"Hypnotoad"]).to.equal(@4);
+    });
 });
 
 SpecEnd
