@@ -148,4 +148,22 @@ it(@"should allow you to clear all objects off the queue", ^{
 	expect(queue.count == 0).to.beTruthy();
 });
 
+it(@"should return the correct total of all objects in the queue", ^{
+    CWPriorityQueue *queue = [CWPriorityQueue new];
+    
+    expect(queue.count == 0).to.beTruthy();
+    
+    [queue addItem:@"Hello" withPriority:3];
+    expect(queue.count == 1).to.beTruthy();
+    
+    [queue addItem:@"World" withPriority:5];
+    expect(queue.count == 2).to.beTruthy();
+    
+    [queue dequeue];
+    expect(queue.count == 1).to.beTruthy();
+    
+    [queue dequeue];
+    expect(queue.count == 0).to.beTruthy();
+});
+
 SpecEnd
