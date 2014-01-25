@@ -114,15 +114,17 @@ describe(@"cache tests", ^{
 });
 
 describe(@"removeObjectForKey", ^{
+    NSString * const kObjectKey = @"Hypnotoad";
+    
     CWTrie *trie = [CWTrie new];
     
-    [trie setObjectValue:@4 forKey:@"Hypnotoad"];
+    [trie setObjectValue:@4 forKey:kObjectKey];
     
-    expect([trie objectValueForKey:@"Hypnotoad"]).to.equal(@4);
+    expect([trie objectValueForKey:kObjectKey]).to.equal(@4);
     
-    [trie removeObjectValueForKey:@"Hypnotoad"];
+    [trie removeObjectValueForKey:kObjectKey];
     
-    expect([trie objectValueForKey:@"Hypnotoad"]).to.beNil();
+    expect([trie objectValueForKey:kObjectKey]).to.beNil();
 });
 
 SpecEnd
