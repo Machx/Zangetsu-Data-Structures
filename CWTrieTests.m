@@ -113,4 +113,16 @@ describe(@"cache tests", ^{
     });
 });
 
+describe(@"removeObjectForKey", ^{
+    CWTrie *trie = [CWTrie new];
+    
+    [trie setObjectValue:@4 forKey:@"Hypnotoad"];
+    
+    expect([trie objectValueForKey:@"Hypnotoad"]).to.equal(@4);
+    
+    [trie removeObjectValueForKey:@"Hypnotoad"];
+    
+    expect([trie objectValueForKey:@"Hypnotoad"]).to.beNil();
+});
+
 SpecEnd
