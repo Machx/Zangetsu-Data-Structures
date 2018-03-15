@@ -39,7 +39,7 @@
 @interface CWTrieNode : NSObject
 @property(assign) char key;
 @property(strong) id storedValue;
-@property(copy) NSMutableSet *children;
+@property(strong) NSMutableSet *children;
 @end
 
 @implementation CWTrieNode

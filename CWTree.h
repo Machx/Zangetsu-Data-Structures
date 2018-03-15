@@ -61,7 +61,7 @@
 
  @return the nodes children in the tree
  */
-@property(readonly, copy) NSMutableArray *children;
+@property(readonly, strong) NSMutableArray *children;
 
 /**
  Key to set if a node allows duplicate children
